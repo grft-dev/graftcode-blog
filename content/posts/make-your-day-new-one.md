@@ -3,23 +3,23 @@ title: Make Your Day new one!
 coverImage: 'https://academy.graftcode.com/_next/image?url=%2Fquick-start-image.png&w=3840&q=75'
 ---
 
-What is Graftcode
+# What is Graftcode
 
 Graftcode is a runtime-level integration platform that allows software systems to communicate using strongly typed method calls, even when those systems run in different processes, on different machines, or in different programming languages.
 
 Instead of designing endpoints, defining schemas, and generating clients, you expose a programming interface—classes, methods, and types—and Graftcode makes that interface callable from other applications as if it were local code.
 
-From a developer’s point of view, a remote service becomes just another dependency in the project.
+> From a developer’s point of view, a remote service becomes just another dependency in the project.
 
-A familiar problem, repeated everywhere
+> A familiar problem, repeated everywhere
 
-When two pieces of code live in the same application, they can call each other directly.
+> When two pieces of code live in the same application, they can call each other directly.
 
-When they don’t, we usually introduce an API.
+> When they don’t, we usually introduce an API.
 
-That API then grows a surrounding ecosystem:
+> That API then grows a surrounding ecosystem:
 
-endpoints and routes
+> endpoints and routes
 
 request and response models
 
@@ -29,9 +29,9 @@ versioning rules
 
 compatibility concerns
 
-Over time, a significant part of the system exists not to implement business behavior, but to translate between systems.
+**Over time, a significant part of the system exists not to implement business behavior, but to translate between systems.**
 
-This pattern has repeated itself for decades—from early distributed systems, through SOAP and REST, to modern gRPC. Each generation improved performance or ergonomics, but the underlying idea remained the same: communication lives outside the code.
+**This pattern has repeated itself for decades—from early distributed sy**stems, through SOAP and REST, to modern gRPC. Each generation improved performance or ergonomics, but the underlying idea remained the same: communication lives outside the code.
 
 Graftcode challenges that assumption.
 
