@@ -1,6 +1,6 @@
 ---
 title: Start grafting with GraftCode
-author: Adam Wasilewski
+author: Adam Wasielewski
 category: General
 readingTime: 7
 coverImage: /uploads/quick-start-image.webp
