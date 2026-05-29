@@ -1,5 +1,5 @@
 ---
-title: Start grafting with GraftCode
+title: Start grafting with Graftcode
 author: Adam Wasielewski
 category: General
 readingTime: 7
