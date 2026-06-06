@@ -99,7 +99,7 @@ Synchronous communication means Service A sends a request and waits for Service 
 
 **gRPC** uses Protocol Buffers for a strongly typed, binary-serialized contract. The .proto file is an enforced schema; if a field changes, the consuming service fails at compile time, rather than at runtime. It's significantly faster than REST and better suited for high-throughput internal service communication where both sides of the call are under your control.
 
-| Property        | REST                          | gRPC                           |
+| **Property**    | **REST**                      | **gRPC**                       |
 | --------------- | ----------------------------- | ------------------------------ |
 | Protocol        | HTTP/1.1 or HTTP/2            | HTTP/2                         |
 | Payload format  | JSON (text)                   | Protocol Buffers (binary)      |
@@ -152,13 +152,13 @@ Tools like Istio and Linkerd handle security, routing, and telemetry automatical
 
 ![](</uploads/microservices architecture/image6.png>)
 
-| Scenario                                              | Recommended approach | Why                                                        |
-| ----------------------------------------------------- | -------------------- | ---------------------------------------------------------- |
-| User-facing request needing immediate response        | REST or gRPC         | Latency matters; a response is needed before proceeding    |
-| LLM inference call between internal services          | gRPC                 | Binary serialization, typed contract, streaming support    |
-| Multi-step agent workflow                             | Async event queue    | Steps don't need to block each other                       |
-| Background processing, analytics                      | Message queue        | Throughput over latency, consumers can scale independently |
-| Large fleet needing consistent auth and observability | Service mesh         | Cross-cutting concerns handled at the infrastructure level |
+| **Scenario**                                          | **Recommended approach** | **Why**                                                    |
+| ----------------------------------------------------- | ------------------------ | ---------------------------------------------------------- |
+| User-facing request needing immediate response        | REST or gRPC             | Latency matters; a response is needed before proceeding    |
+| LLM inference call between internal services          | gRPC                     | Binary serialization, typed contract, streaming support    |
+| Multi-step agent workflow                             | Async event queue        | Steps don't need to block each other                       |
+| Background processing, analytics                      | Message queue            | Throughput over latency, consumers can scale independently |
+| Large fleet needing consistent auth and observability | Service mesh             | Cross-cutting concerns handled at the infrastructure level |
 
 Understanding how services communicate gets you halfway there. The other half is knowing what to do when that communication breaks, and which patterns engineers actually reach for in production to contain failures before they cascade.
 
@@ -263,11 +263,11 @@ Distributed tracing works by assigning a unique trace ID to each incoming reques
 
 A concrete example: your agent orchestrator calls a context retrieval service, which in turn calls an embedding service, which then calls a vector database. The overall request takes 4.2 seconds. Without tracing, you don't know whether the latency is in the retrieval logic, the embedding model, or the vector DB query. With tracing, you can immediately see that the embedding service takes 3.8 seconds, while everything else is fast.
 
-| Pillar  | What does it tell you                             | Common tools          |
-| ------- | ------------------------------------------------- | --------------------- |
-| Logs    | What happened in a specific service               | ELK Stack, Loki       |
-| Metrics | How the system is performing over time            | Prometheus, Datadog   |
-| Traces  | Where the request went and how long each hop took | Jaeger, OpenTelemetry |
+| **Pillar** | **What does it tell you**                         | **Common tools**      |
+| ---------- | ------------------------------------------------- | --------------------- |
+| Logs       | What happened in a specific service               | ELK Stack, Loki       |
+| Metrics    | How the system is performing over time            | Prometheus, Datadog   |
+| Traces     | Where the request went and how long each hop took | Jaeger, OpenTelemetry |
 
 ### **Security**
 
@@ -364,7 +364,7 @@ Because Graftcode abstracts the invocation target from the calling code, switchi
 
 This is the Strangler Fig pattern with the coordination overhead removed. Teams can extract services incrementally, validate them under real traffic, and roll back by changing the environment variable, all without modifying application code.
 
-| Without Graftcode                                                                                                                   | With Graftcode                                                                      |
+| **Without Graftcode**                                                                                                               | **With Graftcode**                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | Write an HTTP client per service pair                                                                                               | Install typed client via package manager                                            |
 | Manually define and maintain DTOs                                                                                                   | Auto-generated, always in sync                                                      |
@@ -406,10 +406,10 @@ Graftcode abstracts the invocation target from the calling code, so switching a 
 
 gRPC is the better choice when performance, strong typing, and schema enforcement matter. Protocol Buffers produce a binary payload significantly smaller and faster than JSON, and the typed contract catches interface mismatches at compile time. It also supports bidirectional streaming natively, useful for LLM token streaming between services. REST remains preferable for external-facing APIs and browser clients.
 
-**6. When should you use Graftcode instead of gRPC or REST for inter-service communication?**
+### **6. When should you use Graftcode instead of gRPC or REST for inter-service communication?**
 
 Graftcode makes the most sense when your primary pain point is integration and maintenance overhead rather than raw protocol performance. If your team is spending significant time writing and updating HTTP clients, managing DTO schemas, or keeping integration contracts in sync as services evolve, Graftcode removes that entire layer. Unlike gRPC, which requires maintaining .proto files and regenerating stubs manually, or REST, which has no enforced schema by default, Graftcode generates strongly-typed Grafts that reflect the provider's current interface and can be updated on demand via a package manager. It also removes the permanent architectural commitment of choosing between a monolith and microservices up front; the same calling code runs in-memory locally and remotely in production, controlled entirely through Graft Configuration.
 
-**7. How does Graftcode improve AI-assisted development workflows?**
+### **7. How does Graftcode improve AI-assisted development workflows?**
 
 Graftcode removes the integration layer from the codebase entirely, no HTTP clients, no DTOs, no stub files. For teams using AI coding assistants, this has two measurable effects. First, it reduces token usage by 30-60% on integration-heavy services, according to Graftcode's founder, because the AI context window focuses on business logic rather than protocol boilerplate. Second, pull requests become cleaner; an interface change only touches the business logic files, since the integration layer doesn't exist in the repo. Both effects improve the accuracy and velocity of AI-assisted development, on greenfield systems and during ongoing maintenance
