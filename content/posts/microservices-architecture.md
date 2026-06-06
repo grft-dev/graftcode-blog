@@ -263,11 +263,11 @@ Distributed tracing works by assigning a unique trace ID to each incoming reques
 
 A concrete example: your agent orchestrator calls a context retrieval service, which in turn calls an embedding service, which then calls a vector database. The overall request takes 4.2 seconds. Without tracing, you don't know whether the latency is in the retrieval logic, the embedding model, or the vector DB query. With tracing, you can immediately see that the embedding service takes 3.8 seconds, while everything else is fast.
 
-| **Pillar** | **What does it tell you**                         | **Common tools**      |
-| ---------- | ------------------------------------------------- | --------------------- |
-| Logs       | What happened in a specific service               | ELK Stack, Loki       |
-| Metrics    | How the system is performing over time            | Prometheus, Datadog   |
-| Traces     | Where the request went and how long each hop took | Jaeger, OpenTelemetry |
+| Pillar  | What does it tell you                             | Common tools          |
+| ------- | ------------------------------------------------- | --------------------- |
+| Logs    | What happened in a specific service               | ELK Stack, Loki       |
+| Metrics | How the system is performing over time            | Prometheus, Datadog   |
+| Traces  | Where the request went and how long each hop took | Jaeger, OpenTelemetry |
 
 ### **Security**
 
