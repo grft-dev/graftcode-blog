@@ -20,7 +20,7 @@ Software architecture has always reflected how teams build and ship. For most of
 
 Microservices emerged as a response to that friction, and a decade later, engineers are still debating how to get them right. The problems have evolved, too. It's not just about splitting a Rails monolith anymore. Teams are now building systems in which LLM inference services, agent orchestrators, RAG pipelines, and traditional backend services must communicate reliably. The integration surface has grown larger, the failure modes more complex, and the cost of getting boundaries wrong higher.
 
-![](</uploads/microservices architecture/image1.png>)
+![](/uploads/microservices-architecture/image1.png)
 
 The thread above is from r/vibecoding, engineers asking how to wire AI components into a microservices architecture without the whole thing becoming unmanageable. The pain points are consistent: inter-service auth overhead, debugging failures across service boundaries, and keeping integration contracts in sync as services evolve. These aren't new problems, but they're hitting harder now. This guide covers what microservices actually involve in practice: where boundaries should be drawn, how services communicate, the patterns that keep distributed systems stable, and the operational costs most teams underestimate until they're already paying them.
 
@@ -61,7 +61,7 @@ A real service boundary means the service owns the full vertical slice: the deci
 
 **Data pipeline**: an ingestion service that owns raw data intake and schema validation. A transformation service that owns normalization and enrichment logic. A serving service that owns the query interface and caching layer. Each stage has its own storage and its own deployment cycle. A schema change in ingestion doesn't require a coordinated redeploy of the serving layer.
 
-![](</uploads/microservices architecture/image7.png>)
+![](/uploads/microservices-architecture/image7.png)
 
 *The left side shows three services split by technical concern; each change requires coordinating all three deployments, and they all read from the same database, making the coupling invisible but real. The right side shows a single service that owns the full vertical slice, including prompt logic, context retrieval, and the model call, all live within one deployment boundary, backed by one owned database, exposing one clean interface to the outside world.*
 
@@ -150,7 +150,7 @@ Tools like Istio and Linkerd handle security, routing, and telemetry automatical
 
 ### **Which Communication Pattern Fits Which Scenario?**
 
-![](</uploads/microservices architecture/image6.png>)
+![](/uploads/microservices-architecture/image6.png)
 
 | **Scenario**                                          | **Recommended approach** | **Why**                                                    |
 | ----------------------------------------------------- | ------------------------ | ---------------------------------------------------------- |
@@ -297,7 +297,7 @@ The integration layer between services isn't a one-time setup cost. Every time a
 
 Graftcode is built specifically to eliminate that cost.
 
-![](</uploads/microservices architecture/image2.png>)
+![](/uploads/microservices-architecture/image2.png)
 
 The diagram above shows how a Graftcode-assisted migration unfolds across three stages. In Stage 1, all modules run in-process inside a single monolith. In Stage 2, the Orders service is extracted, and the Graftcode Gateway runs alongside it, exposing its public methods. The remaining monolith installs a Graft (strongly-typed interface) and controls whether the call runs in-memory or remotely via GraftConfig, set via an environment variable or a config file. In Stage 3, every service has its own Gateway, and the calling service has a separate Graft for each service, each configured independently. No central router, each Graft connects directly to its own Gateway.
 
@@ -307,7 +307,7 @@ Graftcode is a cross-runtime communication layer that lets services call each ot
 
 On the provider side, the Graftcode Gateway runs alongside the exposing service as a server, responsible for making that service's public methods available to callers. It doesn't sit in the middle, routing traffic between services; it lives next to the provider and exposes its interface. Each extracted service gets its own Gateway. If you have three remote services, you have three Gateways, and three corresponding Grafts in the calling service, each independently configured.
 
-![](</uploads/microservices architecture/image5.png>)
+![](/uploads/microservices-architecture/image5.png)
 
 This also changes how AI tools reason about the system during development. A retrieval + execution + summarization loop implemented with REST or gRPC introduces a significant integration surface area: HTTP clients, proto files, stub imports, and DTO mappings that an AI coding assistant has to parse and hold in context. With Graftcode, that surface area disappears from the codebase entirely. The AI context window focuses purely on business logic, improving the accuracy and success rate of AI-generated changes in both greenfield development and the later maintenance and evolution of the system.
 
