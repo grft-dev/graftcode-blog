@@ -8,7 +8,7 @@ readingTime: 15
 coverImage: /uploads/image8.png
 ---
 
-## **TL;DR**
+## TL;DR
 
 * Microservices architecture decomposes a system by business capability, giving teams independent deployability, fault isolation, and scaling flexibility, but at the cost of real operational complexity.
 * Good microservices design is defined by bounded contexts, loose coupling, decentralized data ownership, and building for failure from day one, not just splitting code into smaller repos.
