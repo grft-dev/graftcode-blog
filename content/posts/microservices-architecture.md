@@ -24,7 +24,7 @@ Microservices emerged as a response to that friction, and a decade later, engine
 
 The thread above is from r/vibecoding, engineers asking how to wire AI components into a microservices architecture without the whole thing becoming unmanageable. The pain points are consistent: inter-service auth overhead, debugging failures across service boundaries, and keeping integration contracts in sync as services evolve. These aren't new problems, but they're hitting harder now. This guide covers what microservices actually involve in practice: where boundaries should be drawn, how services communicate, the patterns that keep distributed systems stable, and the operational costs most teams underestimate until they're already paying them.
 
-## **What Is Microservices Architecture and Why Did It Replace the Monolith?**
+## What Is Microservices Architecture and Why Did It Replace the Monolith?
 
 Microservices architecture is a design approach in which a system is broken down into small, independently deployable services, each responsible for a specific business capability. Each service runs its own process, exposes its own interface, and can be deployed, scaled, and updated without touching the rest of the system.
 
@@ -32,7 +32,7 @@ The distinction that matters most is how you draw the boundaries. Splitting by t
 
 To make this concrete: a developer productivity platform might be split into a code execution service, a session management service, a context retrieval service, and an LLM inference service. Each can be scaled independently; the inference service needs GPUs, the session service needs low-latency storage, and the execution service needs sandboxed compute. Each can fail independently. Each can be updated without a coordinated release. That's the actual payoff of microservices, not cleaner diagrams, but independent failure domains and independent scaling budgets.
 
-### **When The Monolith Stops Being Enough**
+### When The Monolith Stops Being Enough
 
 The engineers in that Reddit thread weren't debating microservices vs monolith philosophically; they were hitting specific walls. One team's LLM inference service was getting starved of resources because it shared infrastructure with the rest of the application. Another couldn't update their RAG pipeline without a full redeploy. A third had inter-service auth so tangled that adding a new agent tool required changes across four services.
 
@@ -45,7 +45,7 @@ These are the signals that a monolith is becoming the bottleneck:
 
 None of these are solved automatically by microservices. They're solved by correctly scoped service boundaries that give each component its own scaling budget, failure domain, and deployment cycle. Microservices are the mechanism. The boundary decisions are the actual work.
 
-## **How to Draw Service Boundaries That Actually Hold Up**
+## How to Draw Service Boundaries That Actually Hold Up
 
 Most microservices architectures that end up as a mess got there not because the team chose the wrong technology, but because they drew the wrong boundaries from the start. The hard part isn't splitting a system into smaller services; it's splitting it in a way that gives each service genuine independence, not just a separate codebase with all the same hidden dependencies.
 
@@ -85,7 +85,7 @@ The patterns for implementing this, circuit breakers, bulkheads, and timeouts, a
 
 Once your boundaries are correctly drawn and your services are built to handle failure independently, the next challenge is how they communicate, and what that communication costs as the system scales.
 
-## **How Microservices Communicate with Each Other**
+## How Microservices Communicate with Each Other
 
 In a monolith, one module calls another through an in-process function call, fast, strongly typed, and if something breaks, the stack trace tells you exactly where. In a microservices system, that same call crosses a network boundary. Latency becomes variable. Failures become partial. Debugging becomes distributed.
 
@@ -162,7 +162,7 @@ Tools like Istio and Linkerd handle security, routing, and telemetry automatical
 
 Understanding how services communicate gets you halfway there. The other half is knowing what to do when that communication breaks, and which patterns engineers actually reach for in production to contain failures before they cascade.
 
-## **The Patterns Behind Every Stable Microservices System in Production**
+## The Patterns Behind Every Stable Microservices System in Production
 
 These aren't patterns you read about and file away. They're the ones that show up repeatedly in production incidents, either because someone implemented them and they worked, or because someone skipped them and paid for it.
 
@@ -230,7 +230,7 @@ Without these limits, a memory leak in your inference container or a runaway bac
 
 These patterns keep individual failures from becoming system-wide outages. But even with all of them in place, there's a category of cost that compounds silently as the system grows, one that doesn't show up in your error logs but in your sprint velocity. That's what the next section covers.
 
-## **The Operational Costs That Come With Every Service You Add**
+## The Operational Costs That Come With Every Service You Add
 
 Every service you add to a microservices system increases the system's operational surface area. Not just the service itself, the health checks, the deployment pipeline, the observability instrumentation, the security configuration, the integration contracts with every service it talks to. These costs don't show up on day one. They accumulate quietly until the team is spending more time keeping services running and talking to each other than building the actual product.
 
@@ -289,7 +289,7 @@ For teams using AI coding assistants, this overhead compounds further. REST and 
 
 Pull requests reflect this, too. With REST or gRPC, an interface change touches the HTTP client, the DTO, the stub, and the business logic across multiple files. With Graftcode, the only thing that changes in a commit is the business logic; the integration layer doesn't appear in the diff because it doesn't exist in the repo.
 
-## **How Graftcode Eliminates the Integration Tax**
+## How Graftcode Eliminates the Integration Tax
 
 Every microservices team eventually hits the same wall. The architecture is sound, the services are well-bounded, the communication patterns are in place, and yet a significant chunk of every sprint still disappears into writing HTTP clients, keeping DTOs in sync, and debugging integration mismatches that have nothing to do with business logic. The architecture solved the scaling problem. It created a new one.
 
@@ -378,13 +378,13 @@ Beyond the developer experience, Graftcode's communication layer runs up to 70% 
 
 The integration tax is one of the most consistent and underappreciated drags on microservices teams. Graftcode removes it at the layer where it actually lives, not by changing how you architect your services, but by changing what it costs to connect them.
 
-## **Conclusion: The Integration Layer Is Where Microservices Succeed or Fail**
+## Conclusion: The Integration Layer Is Where Microservices Succeed or Fail
 
 Getting the architecture right, correct service boundaries, the right communication patterns, and the defensive patterns that contain failures is necessary but not sufficient. The teams that run microservices successfully at scale are the ones that treat the operational and integration layer with the same engineering seriousness as the architecture itself. The ones that don't end up with a distributed monolith that's harder to debug, harder to deploy, and slower to build on than what they started with.
 
 The integration tax is where most of that failure accumulates, quietly, sprint by sprint, until 30-40% of engineering capacity is going to integration code instead of product. [Graftcode](https://www.graftcode.com) removes that cost at the layer where it actually lives. To get started, explore [Graftcode](https://www.graftcode.com) or go straight to the [Graftcode Academy](https://academy.graftcode.com) to wire up your first service in minutes.
 
-## **Frequently Asked Questions**
+## Frequently Asked Questions
 
 ### **1. What is the difference between microservices and service-oriented architecture (SOA)?**
 
