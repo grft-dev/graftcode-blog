@@ -30,7 +30,7 @@ API communication protocols are easy to overlook when a system is small. They be
 
 REST is built on HTTP/1.1. Services expose resources at URLs, callers interact using standard HTTP verbs, and data moves as JSON. A typical call:
 
-```
+```python
 response = await client.post(
     "http://inference-service/api/v1/inference",
     json={"model": "llama-3", "prompt": prompt, "max_tokens": 512}
@@ -53,7 +53,7 @@ The weakness is contract enforcement. Nothing stops a provider from renaming `ma
 
 gRPC starts with a `.proto` file, the single source of truth for the service interface. `protoc` generates typed stubs from it. The calling service uses those stubs directly:
 
-```
+```python
 channel = grpc.insecure_channel(
     "inference-service:50051",
     options=[("grpc.keepalive_time_ms", 10000)]
@@ -123,7 +123,7 @@ Streaming is where the protocol difference becomes most visible for 2026 workloa
 
 ### **The `.proto` for a streaming inference service:**
 
-```
+```protobuf
 syntax = "proto3";
 
 service InferenceService {
@@ -155,7 +155,7 @@ message InferenceToken {
 
 SSE is the standard REST approach for server-push. It works, but it runs on a separate infrastructure path from your regular API calls, a different content type, different client handling, and no shared transport with your other endpoints.
 
-```
+```python
 # Server (FastAPI)
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
@@ -178,7 +178,7 @@ async def stream_inference(req: InferenceRequest):
     )
 ```
 
-```
+```python
 # Client -- SSE requires a separate library (httpx-sse)
 import httpx
 from httpx_sse import connect_sse
@@ -198,7 +198,7 @@ with httpx.Client() as client:
 
 gRPC's server streaming runs over the same HTTP/2 connection as every other call, no separate infrastructure, no different client setup.
 
-```
+```python
 # Server
 class InferenceServicer(inference_pb2_grpc.InferenceServiceServicer):
 
@@ -212,7 +212,7 @@ class InferenceServicer(inference_pb2_grpc.InferenceServiceServicer):
             )
 ```
 
-```
+```python
 # Client
 stub = inference_pb2_grpc.InferenceServiceStub(channel)
 
@@ -273,7 +273,7 @@ gRPC's overhead is front-loaded, the `.proto` file, the stub generation, the reg
 
 With REST, each service gets its own connection pool:
 
-```
+```python
 async with httpx.AsyncClient() as client:
     retrieval  = await client.post("http://retrieval-service/retrieve", json={...})
     execution  = await client.post("http://execution-service/execute", json={...})
@@ -282,7 +282,7 @@ async with httpx.AsyncClient() as client:
 
 With gRPC, all three calls run in parallel over persistent HTTP/2 channels:
 
-```
+```python
 with futures.ThreadPoolExecutor(max_workers=3) as executor:
     r = executor.submit(retrieval_stub.Retrieve, RetrieveRequest(...), timeout=10.0)
     e = executor.submit(execution_stub.Execute, ExecuteRequest(...), timeout=10.0)
@@ -309,7 +309,7 @@ Picking a protocol solves the transport question. What it doesn't solve is the i
 
 With REST, every service integration means writing and maintaining an HTTP client:
 
-```
+```python
 import httpx
 from pydantic import BaseModel
 
@@ -338,7 +338,7 @@ async def run_inference(prompt: str) -> dict:
 
 With gRPC, the stub handles transport, but the `.proto` maintenance cycle is now the team's responsibility:
 
-```
+```bash
 # Every time the inference service changes its interface:
 protoc --python_out=. --grpc_python_out=. inference.proto
 # Commit the regenerated stubs
@@ -347,7 +347,7 @@ protoc --python_out=. --grpc_python_out=. inference.proto
 
 And what interface drift looks like in practice:
 
-```
+```bash
 # Provider renames max_tokens → max_new_tokens in .proto
 # Without regenerating stubs: silent wrong behavior
 # After regenerating: compile error immediately -- caught before production
@@ -362,7 +362,7 @@ Both approaches leave the same problem: keeping the calling service in sync with
 
 Instead of writing HTTP clients or running `protoc`, the calling service installs a Graft via its package manager:
 
-```
+```bash
 pip install --index-url https://grft.dev/your-project-id inference-service@1.0.0
 pip install --index-url https://grft.dev/your-project-id retrieval-service@1.0.0
 pip install --index-url https://grft.dev/your-project-id summary-service@1.0.0
@@ -370,7 +370,7 @@ pip install --index-url https://grft.dev/your-project-id summary-service@1.0.0
 
 The same three-service agent loop from above section becomes:
 
-```
+```python
 from inference_service import InferenceService
 from retrieval_service import RetrievalService
 from summary_service import SummaryService
@@ -401,7 +401,7 @@ Pull requests get cleaner too. With REST or gRPC, an interface change touches th
 
 Error handling uses native exceptions, no status code translation layer:
 
-```
+```python
 try:
     result = InferenceService.run_inference(model="llama-3", prompt=prompt, max_tokens=512)
 except Exception as e:
