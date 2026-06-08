@@ -101,15 +101,6 @@ Synchronous communication means Service A sends a request and waits for Service 
 
 ![](/uploads/microservices-architecture/table.png)
 
-| Property        | REST                          | gRPC                           |
-| --------------- | ----------------------------- | ------------------------------ |
-| Protocol        | HTTP/1.1 or HTTP/2            | HTTP/2                         |
-| Payload format  | JSON (text)                   | Protocol Buffers (Binary)      |
-| Typing          | Loose (optional via OpenAPI)  | Strongly Typed                 |
-| Performance     | Moderate                      | High                           |
-| Browser support | native                        | Limited                        |
-| Best for        | Public APIs, external clients | Internal service communication |
-
 Here's what the same call looks like in both:
 
 ```js
