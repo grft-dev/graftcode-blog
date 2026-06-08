@@ -2,7 +2,7 @@
 title: 'MCP Hosting: How to Expose Your Code as an MCP Server Without Writing One'
 slug: mcp-hosting
 date: 2026-06-06T06:43:46.393Z
-author: 'MCP Hosting: How to Expose Your Code as an MCP Server Without Writing One'
+author: Adam Wasielewski
 category: General
 readingTime: 10
 coverImage: /uploads/image6.png
