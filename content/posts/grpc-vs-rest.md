@@ -5,7 +5,7 @@ date: 2026-06-05T06:23:45.140Z
 author: Adam Wasielewski
 category: General
 readingTime: 15
-coverImage: /uploads/image4.png
+coverImage: /uploads/grpc-vs-rest.png
 ---
 
 ## TL;DR
