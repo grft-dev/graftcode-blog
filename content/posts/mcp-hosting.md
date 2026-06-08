@@ -51,11 +51,7 @@ Most of the complexity in MCP hosting comes down to three requirements that any 
 * **A stable endpoint:** The AI client needs to know where to connect. For stdio-based tools like Claude Desktop, this is a local subprocess command. For HTTP/SSE-based connections like Cursor, it's a URL, typically something like `http://localhost:81/mcp` locally, or a permanent remote URL in production. Without a stable endpoint, every redeployment breaks the client configuration.
 * **Tool discovery:** This is where most of the manual work lives. The AI client connects and immediately asks what tools are available. Something has to respond to that `tools/list` request with each tool's name, description, and full parameter schema. In a hand-written MCP server, you define all of this explicitly. With Graftcode Gateway, it reads your module's public methods and generates the tool definitions automatically.
 
-| Requirement      | MCP server written from scratch                                                          | Graftcode Gateway                                                                                  |
-| ---------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Runnable process | You provision and manage the process yourself, local or cloud                            | Runs inside a Docker container, managed by the `gg` binary                                         |
-| Stable endpoint  | You configure the transport, port, and URL manually                                      | Port 81 is auto-exposed and serves /mcp out of the box                                             |
-| Tool discovery   | Every tool definition written by hand, once per method, updated manually on every change | gg introspects your exported classes on startup and generates the full tool manifest automatically |
+![](/uploads/mcp-hosting/table-1.png)
 
 Of the three requirements, tool discovery is the one that never stays finished. Every time a method is added, renamed, or removed, the tool definitions need a matching update, separately from the code change itself. In a service that evolves quickly, that gap between your code and its tool manifest is where things break. That's exactly the problem Graftcode Gateway is built to eliminate.
 
@@ -123,10 +119,7 @@ CMD ["gg", "./package.json"]
 
 Two ports matter here:
 
-| Port | Purpose                                                                              |
-| ---- | ------------------------------------------------------------------------------------ |
-| 80   | Handles inbound service-to-service calls (from services that have installed a Graft) |
-| 81   | Serves the MCP endpoint (`/mcp`) and Graftcode Vision (`/GV`)                        |
+![](/uploads/mcp-hosting/table-2.png)
 
 The container runs two components: your module and the `gg` binary. On startup, `gg` reads `package.json` to locate the entry point, introspects all exported classes, and takes ownership of both ports, port 80 accepts inbound calls from other services that have installed a Graft, while port 81 serves the MCP endpoint and Graftcode Vision side by side.
 
@@ -230,12 +223,7 @@ That's the only change to your setup. Same Dockerfile, same container, same publ
 
 ### **What a Project Key gives you**
 
-| Feature           | Without Project Key | With Project Key                                    |
-| ----------------- | ------------------- | --------------------------------------------------- |
-| MCP endpoint      | `localhost` only    | Stable remote URL                                   |
-| Registry URL      | Changes on redeploy | Permanent, versioned                                |
-| Portal visibility | None                | All gateways in one place at gateways.graftcode.com |
-| Access control    | None                | Package manager auth and permissions                |
+![](/uploads/mcp-hosting/table-3.png)
 
 ### **Updating your AI tool config for production**
 
@@ -245,14 +233,7 @@ Once deployed with a Project Key, your MCP endpoint moves from `http://localhost
 
 For most backend services, Graftcode Gateway covers everything needed to get code in front of an AI agent. That said, there are cases where writing an MCP server from scratch makes more sense. The decision comes down to how much control you need over the protocol layer.
 
-| Scenario                                                                          | Better approach         |
-| --------------------------------------------------------------------------------- | ----------------------- |
-| Exposing existing classes or modules to AI agents                                 | Graftcode Gateway       |
-| Need MCP tools live quickly with no protocol code                                 | Graftcode Gateway       |
-| Service logic evolves frequently, methods added, renamed, removed                 | Graftcode Gateway       |
-| Need custom middleware between the agent call and your logic                      | Hand-written MCP server |
-| Complex auth flows that go beyond access control (e.g. per-call token validation) | Hand-written MCP server |
-| Need fine-grained control over tool descriptions and parameter schemas            | Hand-written MCP server |
+![](/uploads/mcp-hosting/table-4.png)
 
 The gateway approach works best when your public methods already represent the right level of granularity for an agent to call. If your service needs significant transformation between what the agent sends and what your code expects, or if you need to intercept calls for logging, rate limiting, or custom validation, a hand-written server gives you the control points to do that cleanly.
 
