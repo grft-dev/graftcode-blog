@@ -89,17 +89,7 @@ How REST and gRPC Differ at a Technical Level
 
 Choosing between REST and gRPC isn't just a syntax preference, the two protocols make fundamentally different tradeoffs at the transport, serialization, and contract layers. Here's how they compare:
 
-| Dimension          | REST                              | gRPC                                |
-| ------------------ | --------------------------------- | ----------------------------------- |
-| Transport          | HTTP/1.1                          | HTTP/2                              |
-| Serialization      | JSON                              | Protobuf (binary)                   |
-| Schema enforcement | Optional                          | Required (`.proto`)                 |
-| Streaming          | SSE / WebSockets (separate setup) | Native (4 patterns built-in)        |
-| Browser support    | Native                            | Requires gRPC-Web proxy             |
-| Payload size       | Larger (verbose text)             | 3–10x smaller                       |
-| Debugging          | Easy, readable payloads           | Harder, binary needs tooling        |
-| Error handling     | HTTP status codes                 | gRPC status codes (separate system) |
-| Code generation    | Optional                          | Required                            |
+![](/uploads/grpc-vs-rest/table-1.png)
 
 ### **Transport: HTTP/1.1 vs HTTP/2**
 
@@ -109,14 +99,7 @@ HTTP/2 gives gRPC three things REST on HTTP/1.1 doesn't have: multiplexing (mult
 
 The table above compares protocol features. What it doesn't show is the execution pipeline each protocol runs through before business logic ever fires:
 
-| Layer                  | REST                        | gRPC                         | Graftcode                                                               |
-| ---------------------- | --------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
-| **Request parsing**    | HTTP request handler        | Protocol framing             | No parsing, invocation intent is represented as object graphs natively  |
-| **Routing**            | Controller dispatch         | Generated stub lookup        | No routing layer, method is called directly via the Graft interface     |
-| **Serialization**      | JSON serialize/deserialize  | Protobuf marshal/unmarshal   | Hypertube channel, compact binary, no text parsing, no schema traversal |
-| **Type translation**   | DTO mapping                 | Protocol type → runtime type | No translation, runtime-native types preserved end to end               |
-| **Framework overhead** | Middleware pipeline         | Buffer management            | No web framework, no protocol adapter, no handler chain                 |
-| **Business logic**     | Runs after all of the above | Runs after all of the above  | Runs with minimal preamble                                              |
+![](/uploads/grpc-vs-rest/table-2.png)
 
 REST and gRPC both integrate above the runtime, REST at the web framework level, gRPC at the protocol level. Every call passes through this stack regardless of how simple the business logic is. Graftcode integrates at the runtime level, representing invocation intent directly as object graphs and executing using native runtime semantics. There are no controllers, no handlers, no protocol adapters. The execution path is shorter by design.
 
@@ -251,13 +234,7 @@ except grpc.RpcError as e:
 
 The difference in practice:
 
-|                 | REST (SSE)                         | gRPC server streaming                      |
-| --------------- | ---------------------------------- | ------------------------------------------ |
-| Transport       | HTTP/1.1, separate from API calls  | HTTP/2, same connection as all other calls |
-| Client library  | Separate SSE library required      | Same gRPC stub                             |
-| Error handling  | HTTP status codes + custom parsing | Typed gRPC status codes                    |
-| Bidirectional   | No, server push only               | Yes, native bidirectional streaming        |
-| Browser support | Native                             | Requires gRPC-Web proxy                    |
+![](/uploads/grpc-vs-rest/table-3.png)
 
 For token streaming specifically, one direction, server to client, SSE works fine. For teams where gRPC-style server streaming is the requirement, token output over a typed RPC stream, bidirectional tool calls mid-request, gRPC is the most direct fit. Graftcode approaches streaming differently: through stateful service interactions, callbacks, and duplex communication that replace WebSocket or SignalR patterns. The two models aren't equivalent, but Graftcode isn't a non-starter for event-driven or push-based patterns, it handles them through a different mechanism. Worth evaluating against your specific use case before ruling it out.
 
@@ -446,12 +423,7 @@ Each provider service runs its own Graftcode Gateway independently alongside it.
 
 ### **How overhead compounds across CPU, memory, and network**
 
-| Resource             | REST                                                                                                                             | gRPC                                                                                                                                          | Graftcode                                                                                                                      |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| **CPU**              | Request parsing, JSON serialization, middleware pipeline, DTO mapping, scales with request volume regardless of logic complexity | Protobuf marshal/unmarshal, buffer management, protocol-to-runtime type translation, lower than REST but still proportional to message volume | Minimal, primarily business logic execution. No web framework pipeline, no text parsing, no protocol dispatch                  |
-| **Memory**           | Allocates request/response objects, parsed JSON structures, intermediate DTOs, framework-internal state, increases GC pressure   | Allocates Protobuf message objects, intermediate buffers, protocol-to-runtime conversion objects                                              | Represents invocation as object graphs, preserves references instead of flattening, fewer temporary objects, lower GC pressure |
-| **Network**          | Verbose JSON payloads with repeated field names, larger payload, higher bandwidth                                                | Binary Protobuf encoding, smaller than JSON but still carries protocol framing and schema-driven field encoding                               | Transmits only invocation intent and minimal metadata, no routing information, no protocol metadata                            |
-| **Scaling behavior** | Serialization costs compound nonlinearly under load                                                                              | Lower base cost but still grows with message volume and schema complexity                                                                     | Scales closer to linearly with actual business logic, overhead categories are removed, not optimized                           |
+![](/uploads/grpc-vs-rest/table-4.png)
 
 In benchmark testing, Graftcode runs up to 70% faster than traditional web services with one-eighth the CPU overhead. The Performance Lab's large-payload test, 5,000 data points per call, all three on the same .NET runtime over HTTP/2, network latency excluded, shows Graftcode at 22ms, gRPC unary at 53ms, and REST at 1,245ms. Graftcode is 98.2% faster than REST on this workload.
 
@@ -463,17 +435,7 @@ Graftcode's [Performance Lab](https://gc-d-ca-polc-demo-perf-lab-01.blackgrass-d
 
 Protocol decisions rarely happen in isolation, they depend on who the consumers are, how much the interface will change, and what the team can realistically maintain. This table maps the signals to the right choice:
 
-| Signal                      | REST                                     | gRPC                                             | Graftcode                                                                |
-| --------------------------- | ---------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------ |
-| **API consumers**           | External, browser, third-party           | Internal services only                           | Internal services with frequent calls                                    |
-| **Performance requirement** | Moderate                                 | High throughput, low latency                     | Very high throughput, minimal CPU overhead                               |
-| **Schema stability**        | Evolving, frequently changing            | Stable, enforced contract needed                 | Stable interface, compile-time safety preferred                          |
-| **Streaming**               | Not needed                               | Required (server push, bidirectional)            | Stateful interactions, callbacks, duplex, not protocol-level streaming   |
-| **Languages**               | Single language or standard HTTP clients | Polyglot, generated stubs needed                 | Polyglot, 20 languages, 10 package managers, no stubs                    |
-| **Integration overhead**    | Manageable                               | Growing with service count                       | Significant, team time going to integration code                         |
-| **Local vs prod routing**   | Manual env config                        | Manual env config                                | GraftConfig, env var, config file, or per-Graft. No code change          |
-| **Migration context**       | N/A                                      | N/A                                              | Monolith-to-microservices migrations                                     |
-| **Scaling behavior**        | Linear with request volume               | Lower base, grows with message/schema complexity | Scales with business logic, integration overhead is removed, not reduced |
+![](/uploads/grpc-vs-rest/table-5.png)
 
 ### **Three common scenarios**
 
