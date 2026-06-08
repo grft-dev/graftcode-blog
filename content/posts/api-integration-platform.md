@@ -5,7 +5,7 @@ date: 2026-06-07T07:29:26.206Z
 author: Adam Wasielewski
 category: General
 readingTime: 10
-coverImage: /uploads/image4.png
+coverImage: /uploads/api-integration-platforms.png
 ---
 
 ## TLDR
@@ -80,7 +80,7 @@ A Graft is a strongly-typed interface generated inside the calling service via p
 
 The difference isn't just fewer lines of code. The REST version has no compile-time visibility into the provider's interface, a field rename in the response is a KeyError in production. The Graftcode version surfaces that change as a package update before deployment.
 
-****![](/uploads/api-integration-platform/image1.png)
+\*\*\*\*![](/uploads/api-integration-platform/image1.png)
 
 #### **Where it fits:**
 
