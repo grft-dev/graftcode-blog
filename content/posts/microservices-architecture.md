@@ -2,7 +2,7 @@
 title: 'Microservices Architecture: A Complete Guide for Backend Engineers'
 slug: microservices-architecture
 date: 2026-06-04T09:37:21.895Z
-author: Adam Wasielewski
+author: Artur Fiedorowicz
 category: General
 readingTime: 15
 coverImage: /uploads/Microservices Architecture_ A Complete Guide for Backend Engineers.png
