@@ -5,7 +5,7 @@ date: 2026-06-04T09:37:21.895Z
 author: Adam Wasielewski
 category: General
 readingTime: 15
-coverImage: /uploads/image8.png
+coverImage: /uploads/Microservices Architecture_ A Complete Guide for Backend Engineers.png
 ---
 
 ## TL;DR
