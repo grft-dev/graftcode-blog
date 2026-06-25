@@ -8,7 +8,7 @@ readingTime: 10
 coverImage: /uploads/image4.png
 ---
 
-## **TLDR**
+## TLDR
 
 * **Event-driven architecture decouples services** by having them publish and consume events through a broker rather than calling each other directly, enabling independent scaling, async processing, and loose coupling.
 * **Four patterns power EDA systems**: event notification, event-carried state transfer, event sourcing, and CQRS, each addressing a different trade-off among payload size, consistency, and query complexity.
@@ -22,7 +22,7 @@ EDA solves coupling and scalability well. But it raises a problem most teams und
 
 This guide covers EDA from the ground up: what it is, the four core patterns, how cross-service communication works in practice, where the integration complexity accumulates, and how to eliminate it.
 
-## **What is an event-driven architecture**
+## What is an event-driven architecture
 
 ![](/uploads/event-driven-architecture/image7.png)
 
@@ -56,13 +56,13 @@ Every EDA system has three roles:
 
 Understanding what EDA is and isn't sets the foundation for the patterns that actually power it.
 
-## **The four patterns that power event-driven systems**
+## The four patterns that power event-driven systems
 
 ![](/uploads/event-driven-architecture/image9.png)
 
 EDA isn't a single pattern; it's a family of approaches that sit on a spectrum from simple to complex. Real systems typically combine two or more of them, so understanding each one individually matters before applying them together.
 
-### **Event notification keeps payloads lightweight**
+### Event notification keeps payloads lightweight
 
 Event notification is the simplest pattern. A producer emits a small signal, "this thing happened", with minimal payload. Consumers receive the notification and fetch any additional state they need independently.
 
@@ -100,7 +100,7 @@ CQRS pairs naturally with event sourcing: commands produce events, events update
 
 With the patterns established, the next layer is what actually happens between services at runtime when an event fires.
 
-## **How cross-service communication works inside EDA systems**
+## How cross-service communication works inside EDA systems
 
 ![](/uploads/event-driven-architecture/image6.png)
 
@@ -123,7 +123,7 @@ Writing publishers and handlers across these services in different languages is 
 
 In a five-service system with four language pairs, that's a significant ongoing maintenance surface. And none of it is business logic. That surface is the integration layer, and it's where most of the complexity compounds.
 
-## **Why does the integration layer get expensive fast?**
+## Why does the integration layer get expensive fast
 
 ![](/uploads/event-driven-architecture/image5.png)
 
@@ -141,7 +141,7 @@ The specific problems that compound:
 
 Each new service and language pair added to the system multiplies this surface. This is the integration tax, and the question is whether it needs to exist at all.
 
-## **How Graftcode eliminates the integration layer from EDA systems**
+## How Graftcode eliminates the integration layer from EDA systems
 
 ![](/uploads/event-driven-architecture/image2.png)
 
@@ -265,7 +265,7 @@ The gap comes from native runtime integration. Hypertube connects directly to ta
 
 Graftcode supports over 20 programming languages across all major package managers, npm, pip, NuGet, Maven, RubyGems, Go Modules, and others. Services written in Python, Java, C#, Node.js, Go, Ruby, PHP, and Kotlin can communicate through Grafts without any language-specific integration code. It works across AWS, Azure, GCP, Kubernetes, and Docker.
 
-## **Best practices for keeping event-driven systems maintainable**
+## Best practices for keeping event-driven systems maintainable
 
 Building a working EDA system is one thing. Keeping it maintainable at scale requires deliberate choices across schema management, failure handling, and observability.
 
@@ -285,7 +285,7 @@ Building a working EDA system is one thing. Keeping it maintainable at scale req
 
 **Separation of business logic from integration code:** Business logic and integration code shouldn't live in the same layer. Graftcode makes this easier to maintain in practice, service methods express business intent, and the communication layer handles transport automatically.
 
-## **When event-driven architecture is the wrong choice**
+## When event-driven architecture is the wrong choice
 
 EDA has real overhead: a broker to operate, consumers to deploy, schemas to manage, and eventual consistency to reason about. For some systems, that cost isn't worth it.
 
@@ -296,13 +296,13 @@ EDA has real overhead: a broker to operate, consumers to deploy, schemas to mana
 * **The team is small.** EDA adds operational surface area. For a two-engineer team, running Kafka or managing EventBridge rules may outweigh any architectural benefit.
 * **Consistency requirements are strict.** Systems where two operations must succeed or fail together are harder to implement correctly in an async model.
 
-## **Conclusion**
+## Conclusion
 
 Event-driven architecture changes how distributed systems handle state changes, from tight synchronous calls to loosely coupled, reactive flows. The patterns (notification, state transfer, event sourcing, CQRS), the broker, and the cross-service communication layer each need to fit together for the system to hold up at scale.
 
 The broker handles routing. The patterns handle semantics. What's left, the publishers, handlers, and integration code that wire services together across language boundaries, is where the integration tax lands. Eliminating that layer through runtime bridging is what makes EDA genuinely sustainable as the system grows.
 
-## **FAQ**
+## FAQ
 
 ### **1. How does event-driven architecture handle eventual consistency across microservices?**
 
