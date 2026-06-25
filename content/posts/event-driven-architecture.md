@@ -1,6 +1,7 @@
 ---
 title: 'Event-Driven Architecture: Patterns, Cross-Service Communication, and Smarter Integration'
 slug: event-driven-architecture
+date: 2026-06-24T23:42:04.203Z
 author: Adam Wasielewski
 category: General
 readingTime: 10
@@ -236,7 +237,7 @@ GraftConfig controls the mode, point it to the Gateway for remote calls, or set 
 
 Graftcode handles the publisher and handler layer. The broker, Kafka, RabbitMQ, and EventBridge still route messages and manage topics. What Graftcode removes is the integration code that developers would otherwise write to publish to and consume from those topics. The developer specifies the broker address and topic name in GraftConfig. Graftcode takes care of the rest.
 
-****![](/uploads/event-driven-architecture/image1.png)
+\*\*\*\*![](/uploads/event-driven-architecture/image1.png)
 
 Concrete example: a three-service payment flow:
 
