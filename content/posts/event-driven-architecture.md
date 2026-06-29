@@ -35,7 +35,7 @@ The difference from request-driven architecture comes down to coupling:
 
 Every EDA system has three roles:
 
-| Role     | Responsibility                      | Example                                                     |
+| **Role** | **Responsibility**                  | **Example**                                                 |
 | -------- | ----------------------------------- | ----------------------------------------------------------- |
 | Producer | Emits events when state changes     | Payment service emitting `payment.completed`                |
 | Broker   | Receives, stores, and routes events | Kafka topic, AWS SNS, RabbitMQ exchange                     |
@@ -224,7 +224,7 @@ GraftConfig controls the mode, point it to the Gateway for remote calls, or set 
 
 ### **What Graftcode replaces in a real EDA system**
 
-| Without Graftcode                        | With Graftcode                               |
+| **Without Graftcode**                    | **With Graftcode**                           |
 | ---------------------------------------- | -------------------------------------------- |
 | Write event publishers per language      | Publishing handled by the Graftcode layer    |
 | Write event handlers per service         | Handlers auto-generated via Graft            |
@@ -253,11 +253,11 @@ Concrete example: a three-service payment flow:
 
 ![](/uploads/event-driven-architecture/image3.png)
 
-| Protocol              | Speed vs REST    | CPU vs REST    |
-| --------------------- | ---------------- | -------------- |
-| REST (baseline)       | 1×               | 1×             |
-| gRPC                  | \~2–3×           | \~4× lower     |
-| Graftcode (Hypertube) | Up to 70% faster | Up to 8× lower |
+| **Protocol**          | **Speed vs REST** | **CPU vs REST** |
+| --------------------- | ----------------- | --------------- |
+| REST (baseline)       | 1×                | 1×              |
+| gRPC                  | \~2–3×            | \~4× lower      |
+| Graftcode (Hypertube) | Up to 70% faster  | Up to 8× lower  |
 
 The gap comes from native runtime integration. Hypertube connects directly to target runtime native layers; it doesn't wrap HTTP or rely on text-based wire formats. The result is measurably lower overhead at both the network and CPU levels.
 
