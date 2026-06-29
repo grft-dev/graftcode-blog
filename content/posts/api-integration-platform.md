@@ -51,13 +51,13 @@ With those criteria in place, here is how the five platforms actually compare.
 
 Before getting into the per-tool breakdown, here's how all five compare across the criteria that matter most. If your team has a clear constraint, language lock-in, schema overhead, local dev friction, this table is the fastest way to filter.
 
-| Platform       | Type safety  | Language support | Schema required | Local dev (in-process) | Best for                                   |
-| -------------- | ------------ | ---------------- | --------------- | ---------------------- | ------------------------------------------ |
-| Graftcode      | Compile-time | 20 languages     | No              | Yes, via GraftConfig   | Typed cross-runtime internal service comms |
-| gRPC           | Compile-time | Multi-language   | Yes (.proto)    | Needs stub generation  | High-performance internal RPC              |
-| Buf Connect    | Compile-time | Multi-language   | Yes (.proto)    | Needs stub generation  | Modern gRPC alternative with simpler DX    |
-| tRPC           | Compile-time | TypeScript only  | No              | Yes                    | TypeScript-only schema-free RPC            |
-| REST + OpenAPI | Runtime      | Any              | Yes (spec file) | Yes                    | External APIs, default baseline            |
+| **Platform**   | **Type safety** | **Language support** | **Schema required** | **Local dev (in-process)** | **Best for**                               |
+| -------------- | --------------- | -------------------- | ------------------- | -------------------------- | ------------------------------------------ |
+| Graftcode      | Compile-time    | 20 languages         | No                  | Yes, via GraftConfig       | Typed cross-runtime internal service comms |
+| gRPC           | Compile-time    | Multi-language       | Yes (.proto)        | Needs stub generation      | High-performance internal RPC              |
+| Buf Connect    | Compile-time    | Multi-language       | Yes (.proto)        | Needs stub generation      | Modern gRPC alternative with simpler DX    |
+| tRPC           | Compile-time    | TypeScript only      | No                  | Yes                        | TypeScript-only schema-free RPC            |
+| REST + OpenAPI | Runtime         | Any                  | Yes (spec file)     | Yes                        | External APIs, default baseline            |
 
 The table above captures features. This matrix shows where each tool creates ongoing engineering overhead. Schema maintenance and language coverage are the two axes where the tools diverge most sharply, and where the wrong choice compounds fastest as service count grows.
 
@@ -220,15 +220,15 @@ OpenAPI adds a spec layer on top, a YAML or JSON file that describes endpoints, 
 
 Tool comparisons are only useful if they map to real decisions. The right integration layer depends on your stack, your team size, and how much contract maintenance overhead you can absorb long-term. The scenarios below cover the most common situations backend teams run into.
 
-| Scenario                                      | Recommended tool | Why                                                                                                                  |
-| --------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
-| Monolith → microservices migration            | Graftcode        | GraftConfig switches between in-memory and remote without a code change, each extraction is independently reversible |
-| Multi-language internal service calls         | Graftcode        | Only tool in this list with typed interfaces across 20 languages and no schema file                                  |
-| TypeScript-only backend stack                 | tRPC             | Schema-free type safety with zero overhead for full-TypeScript teams                                                 |
-| High-throughput internal RPC                  | Graftcode / gRPC | Both are built for performance; Graftcode removes proto maintenance, gRPC has the wider ecosystem                    |
-| External partner-facing APIs                  | REST + OpenAPI   | Discoverability, documentation, and universal HTTP compatibility matter more here than internal type safety          |
-| Modern proto RPC without full gRPC complexity | Buf Connect      | Better tooling around breaking change detection and schema registry than raw gRPC                                    |
-| AI and agentic systems with multiple services | Graftcode        | Typed, reliable inter-service calls across languages with minimal infrastructure overhead                            |
+| **Scenario**                                  | **Recommended tool** | **Why**                                                                                                              |
+| --------------------------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Monolith → microservices migration            | Graftcode            | GraftConfig switches between in-memory and remote without a code change, each extraction is independently reversible |
+| Multi-language internal service calls         | Graftcode            | Only tool in this list with typed interfaces across 20 languages and no schema file                                  |
+| TypeScript-only backend stack                 | tRPC                 | Schema-free type safety with zero overhead for full-TypeScript teams                                                 |
+| High-throughput internal RPC                  | Graftcode / gRPC     | Both are built for performance; Graftcode removes proto maintenance, gRPC has the wider ecosystem                    |
+| External partner-facing APIs                  | REST + OpenAPI       | Discoverability, documentation, and universal HTTP compatibility matter more here than internal type safety          |
+| Modern proto RPC without full gRPC complexity | Buf Connect          | Better tooling around breaking change detection and schema registry than raw gRPC                                    |
+| AI and agentic systems with multiple services | Graftcode            | Typed, reliable inter-service calls across languages with minimal infrastructure overhead                            |
 
 A few patterns worth noting across these scenarios:
 
