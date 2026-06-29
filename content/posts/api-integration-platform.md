@@ -51,7 +51,13 @@ With those criteria in place, here is how the five platforms actually compare.
 
 Before getting into the per-tool breakdown, here's how all five compare across the criteria that matter most. If your team has a clear constraint, language lock-in, schema overhead, local dev friction, this table is the fastest way to filter.
 
-![](/uploads/api-integration-platform/table-1.png)
+| Platform       | Type safety  | Language support | Schema required | Local dev (in-process) | Best for                                   |
+| -------------- | ------------ | ---------------- | --------------- | ---------------------- | ------------------------------------------ |
+| Graftcode      | Compile-time | 20 languages     | No              | Yes, via GraftConfig   | Typed cross-runtime internal service comms |
+| gRPC           | Compile-time | Multi-language   | Yes (.proto)    | Needs stub generation  | High-performance internal RPC              |
+| Buf Connect    | Compile-time | Multi-language   | Yes (.proto)    | Needs stub generation  | Modern gRPC alternative with simpler DX    |
+| tRPC           | Compile-time | TypeScript only  | No              | Yes                    | TypeScript-only schema-free RPC            |
+| REST + OpenAPI | Runtime      | Any              | Yes (spec file) | Yes                    | External APIs, default baseline            |
 
 The table above captures features. This matrix shows where each tool creates ongoing engineering overhead. Schema maintenance and language coverage are the two axes where the tools diverge most sharply, and where the wrong choice compounds fastest as service count grows.
 
