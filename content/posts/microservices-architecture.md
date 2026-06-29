@@ -99,7 +99,14 @@ Synchronous communication means Service A sends a request and waits for Service 
 
 **gRPC** uses Protocol Buffers for a strongly typed, binary-serialized contract. The .proto file is an enforced schema; if a field changes, the consuming service fails at compile time, rather than at runtime. It's significantly faster than REST and better suited for high-throughput internal service communication where both sides of the call are under your control.
 
-![](/uploads/microservices-architecture/table.png)
+| Property        | REST                          | gRPC                           |
+| --------------- | ----------------------------- | ------------------------------ |
+| Protocol        | HTTP/1.1 or HTTP/2            | HTTP/2                         |
+| Payload format  | JSON (text)                   | Protocol Buffers (binary)      |
+| Typing          | Loose (optional via OpenAPI)  | Strongly typed                 |
+| Performance     | Moderate                      | High                           |
+| Browser support | Native                        | Limited                        |
+| Best for        | Public APIs, external clients | Internal service communication |
 
 Here's what the same call looks like in both:
 
