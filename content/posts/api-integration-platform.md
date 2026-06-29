@@ -220,7 +220,15 @@ OpenAPI adds a spec layer on top, a YAML or JSON file that describes endpoints, 
 
 Tool comparisons are only useful if they map to real decisions. The right integration layer depends on your stack, your team size, and how much contract maintenance overhead you can absorb long-term. The scenarios below cover the most common situations backend teams run into.
 
-![](/uploads/api-integration-platform/table-2.png)
+| Scenario                                      | Recommended tool | Why                                                                                                                  |
+| --------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Monolith → microservices migration            | Graftcode        | GraftConfig switches between in-memory and remote without a code change, each extraction is independently reversible |
+| Multi-language internal service calls         | Graftcode        | Only tool in this list with typed interfaces across 20 languages and no schema file                                  |
+| TypeScript-only backend stack                 | tRPC             | Schema-free type safety with zero overhead for full-TypeScript teams                                                 |
+| High-throughput internal RPC                  | Graftcode / gRPC | Both are built for performance; Graftcode removes proto maintenance, gRPC has the wider ecosystem                    |
+| External partner-facing APIs                  | REST + OpenAPI   | Discoverability, documentation, and universal HTTP compatibility matter more here than internal type safety          |
+| Modern proto RPC without full gRPC complexity | Buf Connect      | Better tooling around breaking change detection and schema registry than raw gRPC                                    |
+| AI and agentic systems with multiple services | Graftcode        | Typed, reliable inter-service calls across languages with minimal infrastructure overhead                            |
 
 A few patterns worth noting across these scenarios:
 
