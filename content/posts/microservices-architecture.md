@@ -99,7 +99,7 @@ Synchronous communication means Service A sends a request and waits for Service 
 
 **gRPC** uses Protocol Buffers for a strongly typed, binary-serialized contract. The .proto file is an enforced schema; if a field changes, the consuming service fails at compile time, rather than at runtime. It's significantly faster than REST and better suited for high-throughput internal service communication where both sides of the call are under your control.
 
-| Property        | REST                          | gRPC                           |
+| **Property**    | **REST**                      | **gRPC**                       |
 | --------------- | ----------------------------- | ------------------------------ |
 | Protocol        | HTTP/1.1 or HTTP/2            | HTTP/2                         |
 | Payload format  | JSON (text)                   | Protocol Buffers (binary)      |
@@ -263,11 +263,11 @@ Distributed tracing works by assigning a unique trace ID to each incoming reques
 
 A concrete example: your agent orchestrator calls a context retrieval service, which in turn calls an embedding service, which then calls a vector database. The overall request takes 4.2 seconds. Without tracing, you don't know whether the latency is in the retrieval logic, the embedding model, or the vector DB query. With tracing, you can immediately see that the embedding service takes 3.8 seconds, while everything else is fast.
 
-| Pillar  | What does it tell you                             | Common tools          |
-| ------- | ------------------------------------------------- | --------------------- |
-| Logs    | What happened in a specific service               | ELK Stack, Loki       |
-| Metrics | How the system is performing over time            | Prometheus, Datadog   |
-| Traces  | Where the request went and how long each hop took | Jaeger, OpenTelemetry |
+| **Pillar** | **What does it tell you**                         | **Common tools**      |
+| ---------- | ------------------------------------------------- | --------------------- |
+| Logs       | What happened in a specific service               | ELK Stack, Loki       |
+| Metrics    | How the system is performing over time            | Prometheus, Datadog   |
+| Traces     | Where the request went and how long each hop took | Jaeger, OpenTelemetry |
 
 ### **Security**
 
