@@ -2,7 +2,7 @@
 title: 'gRPC vs REST: A Developer''s Decision Guide for 2026'
 slug: grpc-vs-rest
 date: 2026-06-05T06:23:45.140Z
-author: Adam Wasielewski
+author: Piotr Chrzan
 category: General
 readingTime: 15
 coverImage: /uploads/grpc-vs-rest.png
