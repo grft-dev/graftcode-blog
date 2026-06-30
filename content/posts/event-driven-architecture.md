@@ -2,7 +2,7 @@
 title: 'Event-Driven Architecture: Patterns, Cross-Service Communication, and Smarter Integration'
 slug: event-driven-architecture
 date: 2026-06-24T23:42:04.203Z
-author: Adam Wasielewski
+author: Artur Fiedorowicz
 category: General
 readingTime: 10
 coverImage: /uploads/image4.png
