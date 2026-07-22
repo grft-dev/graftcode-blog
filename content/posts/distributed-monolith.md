@@ -7,7 +7,7 @@ readingTime: 13
 coverImage: /uploads/distributed-monolith/image1.png
 ---
 
-## **TLDR**
+## TLDR
 
 * **A distributed monolith is a system that's physically distributed but behaviorally coupled:** services may run in separate processes or containers with separate pipelines, but can't be deployed independently; failures cascade across boundaries; and schema changes ripple through the whole system.
 * **Four patterns create it**: lift-and-shift decomposition that mirrors code structure instead of domain boundaries, shared databases that make every schema change a system-wide event, shared libraries that become hidden monoliths, and integration code between services that recreates the same coupling that extraction was supposed to remove.
@@ -21,7 +21,7 @@ Services end up in separate containers and Kubernetes deployments, sometimes in 
 
 This is the distributed monolith, one of the most common yet least discussed outcomes of a microservices migration. This guide covers what it is, the four specific ways teams build one without realizing it, how to diagnose whether you're in one, and how to fix the coupling at each layer, including the integration layer, which is where most fixes stop short.
 
-## **What Is a Distributed Monolith**
+## What Is a Distributed Monolith
 
 A distributed monolith is what you get when a team splits a monolith into separate services without actually decoupling them. The services are physically separate, running in different containers, often with separate CI/CD pipelines, but they behave as a single tightly coupled system at runtime. Separate repos are more characteristic of true microservices than of distributed monoliths; in practice, distributed monolith services frequently share a monorepo. The physical separation is real. The behavioral independence is not.
 
@@ -33,7 +33,7 @@ It's worth distinguishing from two adjacent concepts:
 * **True microservices** have independent deployability, isolated failure domains, and enforced contracts between services
 * A distributed monolith has the deployment complexity of microservices with the coupling of a monolith, the operational overhead without the independence.
 
-## **What a Distributed Monolith Looks Like in Practice**
+## What a Distributed Monolith Looks Like in Practice
 
 ![](/uploads/distributed-monolith/image4.png)
 
@@ -52,7 +52,7 @@ A distributed monolith isn't a choice teams make intentionally; it's what forms 
 
 Understanding why it forms is more useful than recognizing it after the fact.
 
-## **The Four Causes That Create a Distributed Monolith**
+## The Four Causes That Create a Distributed Monolith
 
 Most distributed monoliths form gradually, not all at once. Four patterns appear repeatedly across migrations that end up in this state.
 
@@ -86,7 +86,7 @@ This is the least-discussed cause and the one that compounds fastest. Every cros
 
 That integration code is tightly coupled by design. A field rename in the provider breaks the caller at runtime with no compile-time warning. The integration layer recreates exactly the coupling that extraction was supposed to remove, just invisibly, across a network boundary. And as the number of service pairs grows, the integration surface grows quadratically.
 
-## **How to Diagnose a Distributed Monolith**
+## How to Diagnose a Distributed Monolith
 
 ![](/uploads/distributed-monolith/image2.png)
 
@@ -104,7 +104,7 @@ The last two are the most diagnostic for the integration layer problem specifica
 
 The diagnosis points to three distinct layers of coupling, each requiring a different fix.
 
-## **Fixing the Distributed Monolith: Three Layers of Coupling**
+## Fixing the Distributed Monolith: Three Layers of Coupling
 
 ![](/uploads/distributed-monolith/image3.png)
 
@@ -140,7 +140,7 @@ Three options exist:
 
 **Graftcode**: installs a strongly typed Graft via the package manager. No `.proto` files, no manual code generation step. The Graft mirrors the provider service's public interface exactly. Interface changes surface as the package updates at compile time.
 
-## **How Graftcode Reduces the Integration Layer Coupling and Contract Drift**
+## How Graftcode Reduces the Integration Layer Coupling and Contract Drift
 
 Graftcode is a cross-runtime communication layer. Instead of writing HTTP clients, defining DTOs, and maintaining integration code across service pairs, a service installs a strongly-typed Graft via its standard package manager. The Graft is a generated interface that mirrors the provider service's public methods, method names, argument types, and return types, all expressed in the calling service's native type system.
 
@@ -235,7 +235,7 @@ GraftConfig's in-memory-to-remote switch maps directly to the migration path. Mo
 
 This means the integration contract is enforced from the start of the project, not retrofitted after the distributed monolith has already formed. Every cross-module call is a typed interface, every change surfaces at compile time, and the coupling that builds up invisibly in traditional integration code doesn't have room to form.
 
-## **Preventing a Distributed Monolith Before It Forms**
+## Preventing a Distributed Monolith Before It Forms
 
 Prevention is significantly cheaper than remediation. The distributed monolith forms gradually; by the time it's fully visible, it's embedded in deployment pipelines, on-call rotations, and team workflows.
 
@@ -247,7 +247,7 @@ Prevention is significantly cheaper than remediation. The distributed monolith f
 
 **Start with a modular monolith.** Clean internal module boundaries with in-process calls give teams the architectural discipline of microservices without the operational overhead. Extract when the domain is understood, and the team is ready, not because microservices sound like the right architecture.
 
-## **When a Distributed Monolith Is Hard to Escape**
+## When a Distributed Monolith Is Hard to Escape
 
 Some distributed monoliths are harder to undo than others. Four scenarios make remediation significantly more expensive:
 
@@ -261,13 +261,13 @@ Some distributed monoliths are harder to undo than others. Four scenarios make r
 
 In these cases, the most pragmatic move is often to consolidate back toward a modular monolith, fix domain boundaries, data ownership, and integration contracts correctly, and then extract again from a clean foundation.
 
-## **Conclusion: Distributed Monolith vs Microservices**
+## Conclusion: Distributed Monolith vs Microservices
 
 A distributed monolith doesn't form because teams made the wrong architectural decision. It forms because migrations address one or two of the three coupling mechanisms without addressing all three. Domain boundary fixes without database fixes leave shared state coupling in place. Database fixes without integration layer fixes leave runtime contract drift in place.
 
 The integration layer is where most remediation efforts stop short. Eliminating the HTTP clients, DTOs, and ad-hoc serialization code that recreate coupling across service boundaries, and enforcing those contracts at compile time rather than discovering drift in production, is what separates true microservices from a distributed monolith.
 
-## **FAQs**
+## FAQs
 
 ### **1. What is the difference between a distributed monolith and true microservices?**
 
