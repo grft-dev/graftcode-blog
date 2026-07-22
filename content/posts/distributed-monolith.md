@@ -144,7 +144,7 @@ Three options exist:
 
 Graftcode is a cross-runtime communication layer. Instead of writing HTTP clients, defining DTOs, and maintaining integration code across service pairs, a service installs a strongly-typed Graft via its standard package manager. The Graft is a generated interface that mirrors the provider service's public methods, method names, argument types, and return types, all expressed in the calling service's native type system.
 
-The protocol underneath is Hypertube, a binary runtime bridge that connects language runtimes directly rather than wrapping HTTP. In [Graftcode's Performance Lab](https://gc-d-ca-polc-demo-perf-lab-01.blackgrass-d2c29aae.polandcentral.azurecontainerapps.io/) large-payload benchmark, Hypertube is 22ms vs gRPC's 53ms vs REST's 1,245ms, approximately 57× faster than REST and 2.4× faster than gRPC, with one-eighth the CPU consumption. Across backend teams, roughly 30–40% of engineering time is spent on API plumbing, DTO maintenance, and SDK versioning. Graftcode eliminates that overhead.
+The protocol underneath is Hypertube, a binary runtime bridge that connects language runtimes directly rather than wrapping HTTP. In [Graftcode's Performance Lab](https://gc-d-ca-polc-demo-perf-lab-01.blackgrass-d2c29aae.polandcentral.azurecontainerapps.io/) large-payload benchmark, Hypertube is 22ms vs gRPC's 53ms vs REST's 1,245ms, approximately 57× faster than REST and 2.4× faster than gRPC, with one-eighth the CPU consumption. Across backend teams, roughly 30–40% of engineering time is spent on API plumbing, DTO maintenance, and SDK versioning. Graftcode reduces that overhead.
 
 ### **Why gRPC and REST still leave the integration problem unsolved**
 
