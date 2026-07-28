@@ -283,7 +283,7 @@ In most cases, yes, but it requires deliberately addressing all three coupling l
 
 ### **4. What role does Conway's Law play in creating distributed monoliths?**
 
-Conway's Law states that systems reflect the communication structures of the teams that build them. If teams are organized around the old monolith's structure a shared platform team, a single database team, and a cross-cutting API team, the services they build will reflect that structure. Service boundaries will mirror team boundaries, not domain boundaries. The distributed monolith is often as much an organizational problem as an architectural one. Fixing the architecture without changing the team structure means the coupling reappears with the next round of changes.
+Conway's Law states that systems reflect the communication structures of the teams that build them. If teams are organized around the old monolith's structure a shared platform team, a single database team, and a cross-cutting API team, the services they build will reflect that structure. Service boundaries will mirror team boundaries, not domain boundaries. The distributed monolith is often as much an organizational problem as an architectural one. Fixing the architecture without changing the team structure means the coupling reappears with the next round of changes. 
 
 ### **5. How does Graftcode reduce integration-layer maintenance between services?**
 
