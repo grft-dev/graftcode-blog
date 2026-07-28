@@ -1,6 +1,6 @@
 ---
 title: 'Distributed Monolith vs Microservices: Why Most Migrations Go Wrong'
-slug: distributed-monolith
+slug: distributed-monolith-vs-microservices
 author: Adam Wasielewski
 category: General
 readingTime: 12
