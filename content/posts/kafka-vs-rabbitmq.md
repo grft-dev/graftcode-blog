@@ -291,7 +291,7 @@ This isn't the entire interface an agent needs to reason about; type definitions
 
 With less non-business-logic scaffolding in the codebase, an LLM working across services has less to parse before it can focus on what the service actually does. In agentic pipelines where models read across the codebase to plan and execute workflows, this reduces the per-call context load and compounds into meaningful cost savings as the number of services and agent interactions grows.
 
-!\[]\[image6]
+![](/uploads/kafka-vs-rabbitmq/image3.png)
 
 Kafka handles the streaming backbone for high-volume event pipelines; RabbitMQ handles task queuing and complex routing at the service level; and Graftcode handles the integration layer above both.
 
