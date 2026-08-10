@@ -108,7 +108,6 @@ def get_order_status(order_id: str) -> dict:
     data = response.json()
     # No compile-time warning if legacy service renames "customerId"
     return {"customer_id": data["customerId"], "status": data["orderStatus"]}
-
 ```
 
 In a 15-service system where eight services call the legacy order processor, there are eight versions of this integration code. The integration surface grows quadratically; one new service calling two legacy services adds two integration paths; five services each calling three legacy services adds fifteen. The maintenance burden scales with the number of service pairs, not with team size, and every one of those paths is a place where coupling can re-enter without anyone noticing until it fails.
@@ -126,7 +125,6 @@ The Graftcode Gateway is what runs the legacy service; it spins up a runtime for
 ```bash
 # Run the legacy service through the Gateway
 gg --modules ./order_processor.py
-
 ```
 
 Developers control exactly which assemblies, namespaces, classes, methods, files, or folders get exposed. Nothing is surfaced beyond what's explicitly configured; for a legacy codebase, this matters, since teams don't want the entire legacy service exposed by accident, only the specific capability being extracted or made available to new services.
@@ -151,8 +149,6 @@ GraftConfig.host = os.environ.get("ORDER_PROCESSOR_HOST", "inMemory")
 def get_order_status(order_id: str):
     return OrderProcessor.get_order(order_id=order_id)
     # If legacy service renames "customerId", this fails at compile time
-
-
 ```
 
 The HTTP client, DTOs, serialization, and auth header construction are gone. What remains is the call, enforced at compile time in the calling service's native type system; the boundary is no longer a place where a silent rename can turn into a production incident.
@@ -162,7 +158,6 @@ GraftConfig is what makes this a migration mechanism, not just a syntax improvem
 ```python
 GraftConfig.host = "inMemory"                              # local development
 GraftConfig.host = "tcp://legacy-order-service:9000"        # staging/production
-
 ```
 
 This maps directly onto Strangler Fig. During development, calls run in-memory. When ready to validate against the deployed legacy system, one environment variable change routes the call to its Gateway, with the same calling code on either side, no coordinated cutover, no moment where the calling service's code is in an ambiguous state between old and new.
