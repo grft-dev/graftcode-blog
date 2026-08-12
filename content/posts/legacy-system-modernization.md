@@ -1,6 +1,7 @@
 ---
 title: 'Legacy Modernization Without Rewriting: How to Extend Existing Systems Safely'
 slug: legacy-system-modernization
+date: 2026-08-10T07:47:53.450Z
 author: Adam Wasielewski
 category: General
 readingTime: 10
