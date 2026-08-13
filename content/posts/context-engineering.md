@@ -5,7 +5,7 @@ date: 2026-08-11T08:03:42.184Z
 author: Adam Wasielewski
 category: General
 readingTime: 12
-coverImage: /uploads/context-engineering/software-architecture.png
+coverImage: /uploads/context-engineering/image2.png
 ---
 
 ## TLDR
