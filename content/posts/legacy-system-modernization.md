@@ -5,6 +5,7 @@ date: 2026-08-10T07:47:53.450Z
 author: Adam Wasielewski
 category: General
 readingTime: 10
+coverImage: /uploads/legacy-system-modernization/legacy-modernization.png
 ---
 
 ## TL;DR
