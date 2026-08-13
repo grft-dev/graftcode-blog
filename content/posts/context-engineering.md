@@ -1,10 +1,11 @@
 ---
 title: Software Architecture Is Context Engineering for AI Coding Agents
 slug: context-engineering
-date: 2026-08-11T10:19:17.824Z
+date: 2026-08-11T08:03:42.184Z
 author: Adam Wasielewski
 category: General
 readingTime: 12
+coverImage: /uploads/context-engineering/software-architecture.png
 ---
 
 ## TLDR
