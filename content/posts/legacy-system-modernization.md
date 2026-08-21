@@ -1,10 +1,10 @@
 ---
 title: 'Legacy Modernization Without Rewriting: How to Extend Existing Systems Safely'
 slug: legacy-system-modernization
-date: 2026-08-10T10:22:03.403Z
-author: Adam Wasielewski
+date: 2026-08-10T07:47:53.450Z
+author: Michał Komor
 category: General
-readingTime: 9
+readingTime: 10
 coverImage: /uploads/legacy-system-modernization/legacy-modernization.png
 ---
 
@@ -14,9 +14,9 @@ coverImage: /uploads/legacy-system-modernization/legacy-modernization.png
 * Rewrites fail because they concentrate risk into a single cutover event, forcing the new system to rediscover everything the old one learned in production, all at once.
 * Anti-Corruption Layer, Strangler Fig, and Branch by Abstraction distribute that risk safely: no cutover, no coupling leak, no callers broken mid-migration.
 * All three patterns share one unsolved dependency: the integration boundary between old and new code. Left untyped, that boundary is exactly where coupling re-enters, and safety breaks down.
-* Graftcode enforces that boundary at compile time. New services install a strongly typed Graft for the legacy system via a package manager, and GraftConfig switches between in-memory and remote via an environment variable, with no code change.
+* Graftcode enforces that boundary at compile time. New services install a strongly typed Graft for the legacy system via package manager, and GraftConfig switches between in-memory and remote via an environment variable, with no code change.
 
-*If you've already decided to modernize incrementally and want help choosing which pattern fits your specific situation, see [Legacy Modernization Without Rewriting: Patterns, Strategies, and Smarter Migration](https://graftcode.com/blog/legacy-modernization).*
+*If you've already decided to modernize incrementally and want help choosing which pattern fits your specific situation, see Legacy Modernization Without Rewriting: Patterns, Strategies, and Smarter Migration.*
 
 Software systems become legacy gradually, through accumulated coupling, undocumented assumptions, and code paths nobody fully understands anymore. The system works, but changing it safely has become expensive enough that teams avoid it. Features get bolted on at the edges. The system grows harder to extend every quarter.
 
