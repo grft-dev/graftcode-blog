@@ -2,7 +2,7 @@
 title: 'API Integration Platform Comparison: Top Tools for 2026'
 slug: api-integration-platform
 date: 2026-06-07T07:29:26.206Z
-author: Adam Wasielewski
+author: Piotr Chrzan
 category: General
 readingTime: 10
 coverImage: /uploads/api-integration-platforms.png
