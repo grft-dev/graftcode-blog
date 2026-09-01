@@ -19,7 +19,7 @@ Most conversations about making AI coding tools "more efficient" focus on the pr
 
 This guide starts with what a token actually is and what it costs, then works through why bigger context windows don't solve the problem the way they're marketed to, and ends with the specific architectural pattern, reducing the integration surface between services, that cuts token usage at the source rather than trying to compress or summarize it away after the fact.
 
-## What a Token Actually Is and Why It's the Unit Thats Important
+## What a Token Actually Is and Why It's the Unit That's Important
 
 A token is the unit an LLM actually processes and is billed for, not a word or a character, but a chunk somewhere in between. For English text and most programming languages, a common rule of thumb is roughly four characters per token. However, this varies by tokenizer and by how repetitive or structured the text is.
 
