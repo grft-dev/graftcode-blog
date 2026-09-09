@@ -208,9 +208,9 @@ Feature flags and staged rollouts add a second layer of safety. AI-generated cha
 
 ## Best Practice 7: Structure Migrations So Agents Work Incrementally
 
-Monolith-to-microservices migrations attract a lot of AI-assisted work, since mechanical extraction is exactly the kind of task assistants handle well. A migration only stays safe for an agent to touch, though, if it's broken into small, independently reversible steps.
+Monolith-to-microservices migrations attract a lot of AI-assisted work, since mechanical extraction is exactly the kind of task assistants handle well. A migration stays safe for an agent to touch only if it's broken into small, independently reversible steps.
 
-![](/uploads/ai-assisted-development/image2.png)
+![](/uploads/ai-assisted-development/image5.png)
 
 Strangler Fig-style extraction fits this well: extract one service at a time, keep the monolith running throughout, and make each extraction reversible on its own. An agent, or a human directing one, takes one bounded extraction as a task, verifies it in isolation, and rolls it back without touching anything else in flight. A big-bang rewrite handed to an assistant has no such safe stopping point if something in the middle goes wrong.
 
@@ -226,7 +226,7 @@ Architectural boundary decisions stay with the team. Where a service split happe
 
 Put together, these eight practices form a rough sequence for any team building AI-assisted development into distributed systems work.
 
-!\[]\[image6]
+![](/uploads/ai-assisted-development/image1.png)
 
 | Practice                           | Why It Matters                                                                             |
 | ---------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -241,7 +241,7 @@ Put together, these eight practices form a rough sequence for any team building 
 
 ## Conclusion: Making AI-Assisted Development Work at Scale
 
-AI-assisted development doesn't get worse at distributed systems because the models are less capable there. It gets worse because distributed systems hand an assistant more scaffolding to read, more implicit contracts to infer, and more room for a change to fail somewhere the assistant never looked. The eight practices above, explicit contracts, minimal integration boilerplate, early drift detection, deliberate exposure, direct MCP access, safe local testing, incremental rollout, and human review at service boundaries, all point at the same fix: change the shape of what the assistant is working with, and the same tools that struggle across a dozen loosely-connected services perform a lot closer to how they perform in a single, well-contained one.
+AI-assisted development doesn't get worse at distributed systems because the models are less capable there. It gets worse because distributed systems hand an assistant more scaffolding to read, more implicit contracts to infer, and more room for a change to fail somewhere the assistant never looked. The eight practices above, explicit contracts, minimal integration boilerplate, early drift detection, deliberate exposure, direct MCP access, safe local testing, incremental rollout, and human review at service boundaries, all point to the same fix: change the shape of what the assistant is working with, and the same tools that struggle across a dozen loosely-connected services perform a lot closer to how they perform in a single, well-contained one.
 
 If integration boilerplate is slowing your AI-assisted workflows, [explore how Graftcode removes it](https://academy.graftcode.com/quick-start), or start by seeing [how Graftcode exposes your code as MCP tools](https://www.graftcode.com/use-cases/mcp) if tool-calling agents are the more immediate problem.
 
