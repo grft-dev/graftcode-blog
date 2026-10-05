@@ -64,7 +64,7 @@ The shape of this work changes depending on how a service consumes Service Bus, 
 | Request/reply over queues | All of the above, plus session generation, a session-filtered receiver, and correlation matching | A missed session filter or a mismatched correlation field means a reply lands with the wrong caller, or never arrives at all |
 | Topics and subscriptions  | SDK setup and deserialization repeated per subscription                                          | Every subscription reimplements the same consumer logic even when the message shape is identical across all of them          |
 
-``![](</uploads/azure-service-bus-plugin/Where Integration Work Piles Up.png>)
+![](/uploads/azure-service-bus-plugin/Where-Integration-Work-Piles-Up.png)
 
 Request/reply is the expensive one. Sessions exist so a reply queue can be shared safely across many callers at once, but that safety only holds if the session filter, the reply-to field, and the correlation match are all correct, and a mistake in any one of them doesn't throw an error. It just looks like latency.
 
@@ -85,7 +85,7 @@ Graftcode is a runtime-level integration platform, and its Azure Service Bus plu
 
 On top of that, the plugin offers two modes, set purely by configuration: request/reply over queues for methods that return something, and one-way over a topic for methods that don't.
 
-![](</uploads/azure-service-bus-plugin/Message Flow_ Queue Replies and Topics.png>)
+![](/uploads/azure-service-bus-plugin/Message-Flow_Queue-Replies-and-Topics.png)
 
 Configuring the client side of a request/reply call looks like this:
 
