@@ -1,5 +1,5 @@
 ---
-title: Calling Services Over Azure Service Bus Without Writing the Client Layer
+title: Calling Services Over Azure Service Bus Plugin Without Writing the Client Layer
 slug: azure-service-bus-plugin
 date: 2026-10-04T05:04:45.404Z
 author: Adam Wasielewski
