@@ -1,6 +1,7 @@
 ---
 title: 'AI Token Optimization: How to Reduce Context Waste in AI Coding'
 slug: ai-token-optimization
+date: 2026-09-15T09:33:42.312Z
 author: Adam Wasielewski
 category: General
 readingTime: 7
