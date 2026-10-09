@@ -1,5 +1,6 @@
 ---
 title: Start grafting with Graftcode
+date: 2026-05-04T09:26:32.902Z
 author: Adam Wasielewski
 category: General
 readingTime: 7
