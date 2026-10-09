@@ -1,6 +1,7 @@
 ---
 title: Best Practices for AI-Assisted Development of Distributed Systems
 slug: ai-assisted-development
+date: 2026-09-21T09:34:09.842Z
 author: Adam Wasielewski
 category: General
 coverImage: /uploads/ai-assisted-development/image6.png
