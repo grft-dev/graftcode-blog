@@ -1,6 +1,7 @@
 ---
 title: 'Kafka vs RabbitMQ: Which Message Broker Fits Your Microservices Stack?'
 slug: kafka-vs-rabbitmq
+date: 2026-08-06T09:30:48.520Z
 author: Adam Wasielewski
 category: General
 readingTime: 15
