@@ -1,6 +1,7 @@
 ---
 title: 'Protocol-Agnostic Microservices: Switching Between TCP, WebSocket, and Broker Transport Without Rewriting Code'
 slug: protocol-agnostic
+date: 2026-09-18T09:26:59.101Z
 author: Adam Wasielewski
 category: General
 readingTime: 10
