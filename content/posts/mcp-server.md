@@ -1,6 +1,7 @@
 ---
 title: Do You Really Need a Separate MCP Server?
 slug: mcp-server
+date: 2026-10-22T04:33:19.122Z
 author: Adam Wasielewski
 category: General
 readingTime: 7
