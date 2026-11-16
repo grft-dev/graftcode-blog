@@ -31,7 +31,7 @@ A queue is a one-directional channel. A producer sends a message, and a consumer
 
 On the caller's side, a receiver polls the reply queue and matches each incoming response to a waiting call by correlation ID. If no matching response arrives before a timeout, the call fails. Messages in SQS carry user-defined message attributes, which are the natural place for the correlation ID and the reply address, because they travel with the message without changing the body.
 
-![](/uploads/amazon-sqs-request-reply-microservices/image4.png)
+![Amazon SQS request/reply flow with correlation ID and reply-to address, compared with a one-way flow that has no reply](/uploads/amazon-sqs-request-reply-microservices/image4.png)
 
 Everything else in the design follows from what SQS does and does not provide. It does not route a response to the right caller on its own. It does not guarantee a message is delivered only once on standard queues. It does not tell the sender whether processing succeeded. Each of those gaps becomes a setting or a design decision in the sections that follow.
 
