@@ -63,7 +63,7 @@ The plugin is written in C++ and talks to the Pub/Sub JSON REST API with libcurl
 
 Request/reply works as follows. In the orchestrator and scoring service example from the introduction, the orchestrator is the client and the scoring service is the module hosted by the Gateway. The client publishes the request to `requestTopic` with two attributes: `correlationId`, one value per call, and `replyTo`, the client's reply topic. The Gateway pulls `requestSubscription`, runs the method, and publishes the response to the `replyTo` topic with the same `correlationId`. The client pulls its `replySubscription` until a message with that identifier arrives or `rpcTimeoutMs` elapses. Because the Gateway reads the reply address from each request, its own configuration needs no reply topic.
 
-![](/uploads/pubsub-request-reply-microservices/image5.png)
+![Table comparing Graftcode Pub/Sub request/reply and one-way modes by reply topic, gateway ack timing, and setting](/uploads/pubsub-request-reply-microservices/image5.png)
 
 ### Configuration for the Gateway and the Client
 
@@ -173,7 +173,7 @@ The plugin treats the emulator and production as one code path. The Readme says 
 
 For a ready-made environment, the [`communication-plugin-samples/pubsub folder`](https://github.com/grft-dev/graftcode-extensions/tree/main/communication-plugin-samples/pubsub) in the graftcode-extensions repository holds the emulator, a Gateway hosting a sample module, and the plugin configuration. The sample's run script builds and starts the stack with Docker Compose. It starts three Gateway servers that compete for the same request subscription, which fits how capacity grows: a single Gateway handles one request at a time, and adding Gateway processes on the same subscription adds capacity.
 
-![](/uploads/pubsub-request-reply-microservices/image3.png)
+![Pub/Sub emulator setup with graft-requests and graft-replies topics and three Gateways sharing one request subscription](/uploads/pubsub-request-reply-microservices/image3.png)
 
 ## Credentials, IAM Roles, and Production Settings Checklist for Google Cloud
 
@@ -190,7 +190,7 @@ A short checklist covers the rest of the production changes:
 * Set the expiration policy of request and reply subscriptions to never expire for services that can sit idle for weeks, since the plugin's create call sets only the name, topic, and deadline, which leaves Google's defaults in place for everything else.
 * Grant the Gateway publish rights on every client's reply topic, through a project-level role or through per-topic grants that deployment tooling creates together with each client.
 
-![](/uploads/pubsub-request-reply-microservices/image2.png)
+![Checklist for moving Pub/Sub request/reply to Google Cloud: IAM roles, ack deadline, dead-letter policy, no expiry](/uploads/pubsub-request-reply-microservices/image2.png)
 
 ## Where Should You Start with Pub/Sub and Graftcode
 
