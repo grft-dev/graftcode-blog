@@ -1,5 +1,5 @@
 ---
-title: 'Amazon SQS Request/Reply Between Microservices: Setup Guide'
+title: Amazon SQS Request/Reply for Microservices
 slug: amazon-sqs-request-reply-microservices
 date: 2026-11-16T11:40:11.865Z
 author: Adam Wasielewski
