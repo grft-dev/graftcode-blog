@@ -1,14 +1,9 @@
 ---
 title: 'Amazon SQS Request/Reply Between Microservices: Setup Guide'
 slug: amazon-sqs-request-reply-microservices
+date: 2026-11-16T11:40:11.865Z
 author: Adam Wasielewski
 category: General
-tags:
-  - Amazon SQS
-  - AWS
-  - Microservices
-  - ' Request-Reply Pattern'
-  - Message Queue
 readingTime: 14
 coverImage: /uploads/amazon-sqs-request-reply-microservices/image2.png
 ---
