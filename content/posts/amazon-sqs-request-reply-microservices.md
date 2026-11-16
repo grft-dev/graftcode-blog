@@ -8,7 +8,7 @@ readingTime: 14
 coverImage: /uploads/amazon-sqs-request-reply-microservices/image2.png
 ---
 
-## **TL;DR**
+## TL;DR
 
 * Amazon SQS has no built-in request/reply, so a service that needs an answer from another service has to add a correlation identifier and a reply queue of its own, and has to handle duplicate delivery because standard queues deliver each message at least once.
 * Three SQS settings decide whether synchronous-style calls behave well: the visibility timeout (30 seconds by default, 12 hours at most), the dead-letter queue redrive policy, and the receive wait time (long polling allows up to 20 seconds).
@@ -20,7 +20,7 @@ Amazon SQS is often the first managed queue that a team on AWS reaches for. It d
 
 This piece walks through how request/reply works on top of SQS, which queue settings decide whether it behaves well, and where duplicate delivery and message size limits bite. It then shows how the Amazon SQS plugin for Graftcode carries a typed method call over the same queues, including the configuration for both modes, the IAM permissions each side needs, and a LocalStack setup for local development. A related plugin, Azure Service Bus, handles reply routing differently, and that difference helps explain a design choice.
 
-## **How Request/Reply Works on Top of Amazon SQS**
+## How Request/Reply Works on Top of Amazon SQS
 
 A queue is a one-directional channel. A producer sends a message, and a consumer receives and deletes it. To get an answer back, the caller needs a second channel in the opposite direction, and it needs a way to match each answer to its question. The usual pattern has three parts. The caller creates or owns a reply queue. Each request carries two pieces of metadata: a correlation ID that identifies the call and the reply queue address. The service that processes the request sends its response to that address and copies the correlation ID onto it.
 
@@ -30,7 +30,7 @@ On the caller's side, a receiver polls the reply queue and matches each incoming
 
 Everything else in the design follows from what SQS does and does not provide. It does not route a response to the right caller on its own. It does not guarantee a message is delivered only once on standard queues. It does not tell the sender whether processing succeeded. Each of those gaps becomes a setting or a design decision in the sections that follow.
 
-## **Why Each Caller Needs Its Own Reply Queue**
+## Why Each Caller Needs Its Own Reply Queue
 
 On brokers that can filter receives by a message property, several callers can share one reply queue, and each can pick out its own responses. SQS cannot filter a receive by message attribute. A consumer that receives a message that belongs to someone else would have to put it back, and SQS has no such operation. The practical result is that each client process owns a reply queue, and no two independent processes read from the same one.
 
@@ -38,7 +38,7 @@ This cost is easy to underestimate. A deployment with many short-lived client pr
 
 Other brokers distribute that cost differently. Azure Service Bus, for instance, uses sessions so many clients can safely share a single session-enabled reply queue. SQS has no equivalent, so the one-queue-per-client rule applies to every SQS-based design, whether it is hand-written or generated.
 
-## **Delivery Guarantees, Visibility Timeouts, and Dead-Letter Queues**
+## Delivery Guarantees, Visibility Timeouts, and Dead-Letter Queues
 
 Standard SQS queues deliver each message at least once. According to the [Amazon SQS developer guide on at-least-once delivery](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/standard-queues-at-least-once-delivery.html), a copy can occasionally be delivered again, and the guide advises designing applications to be idempotent, meaning they are not adversely affected by processing the same message more than once. For request/reply, this applies in both directions: a service may receive the same request twice, and a caller may receive the same response twice.
 
@@ -46,7 +46,7 @@ The visibility timeout controls how long a message stays hidden after a consumer
 
 A dead-letter queue collects messages that keep failing. As described in the [dead-letter queue documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html), the `maxReceiveCount` value in the redrive policy sets how many times a consumer can receive a message before SQS moves it to the dead-letter queue. Setting it to 1 sends a message there after a single failed attempt, so the guide recommends a value high enough to allow sensible retries. Without a dead-letter queue, a request that can never succeed returns to the queue indefinitely until it expires.
 
-## **Standard Queues Versus FIFO Queues for Service Calls**
+## Standard Queues Versus FIFO Queues for Service Calls
 
 FIFO queues add ordering and a deduplication feature that standard queues lack. The [message deduplication documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagededuplicationid-property.html) describes a 5-minute deduplication window in which only one message with a given deduplication ID is accepted and delivered. SQS keeps tracking that ID even after the original message has been received and deleted.
 
@@ -54,7 +54,7 @@ Two details limit how far this protection extends. The window is five minutes, s
 
 The choice between the two types usually comes down to whether the calls being made depend on ordering within a group. Standard queues are the simpler default for independent calls. FIFO queues fit calls that must be applied in sequence for the same entity. One consequence applies to any design that uses a single message group. The [message group documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/using-messagegroupid-property.html) states that messages within the same group are always processed one at a time, in strict order. A queue where every message shares one group ID therefore processes requests serially no matter how many consumers are attached, and parallelism comes from using several group IDs. Both queue types need idempotent handlers.
 
-## **Message Size and Long Polling Limits to Plan Around**
+## Message Size and Long Polling Limits to Plan Around
 
 The maximum message size is 1,048,576 bytes (1 MiB), per [Amazon SQS message quotas](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/quotas-messages.html). The same page describes the SQS Extended Client Library for larger payloads, which stores the payload in Amazon S3 and sends a reference. A binary payload that is Base64-encoded before it is sent grows by roughly a third, so a body close to the limit before encoding will not fit after encoding. Large results are better returned as a reference to stored data than as a response body.
 
@@ -62,7 +62,7 @@ Receive behavior affects both latency and cost. With long polling, a receive req
 
 Putting these pieces together by hand requires writing a producer, a consumer, a correlation table, timeout handling, a poller per reply queue, and the idempotency logic on both ends. The next section shows what that looks like when the call is generated from the service's public methods instead.
 
-## **Carrying Graft Calls Over SQS with the Graftcode Plugin**
+## Carrying Graft Calls Over SQS with the Graftcode Plugin
 
 Graftcode lets one service, the Caller, call another service's public methods through a generated, strongly typed interface called a Graft. The service that exposes those methods is the Receiver, and by default a Graft connects directly to the Receiver's Graftcode Gateway. Transport plugins offer a second path, in which the Graft call travels through a broker instead. The graftcode-extensions repository lists plugins for RabbitMQ, Azure Service Bus, Kafka, Amazon SQS, and Google Cloud Pub/Sub, and the SQS plugin's README describes both a request/reply mode and a one-way mode. The Gateway runs and hosts the Receiver service, consumes requests from the queue, invokes the method, and sends the result to the reply queue named in the request.
 
@@ -76,7 +76,7 @@ Failures and concurrency follow from how the Gateway side is built. In the plugi
 
 The reply queue is not created by the plugin. The client config supplies its URL, and the queue has to exist before the first call, which is why the Docker sample runs an init job that creates `graft-requests` and `graft-replies`.
 
-### **Configuration for the Gateway and the Client**
+### Configuration for the Gateway and the Client
 
 The Gateway side is started with the plugin config file. Install the Gateway from a terminal (on Windows, `iwr https://grft.dev/get | iex`; on Linux and macOS, `curl -fsSL https://grft.dev/get | sh`), as a Docker image, or as a binary from the [Gateway releases page](https://github.com/grft-dev/graftcode-gateway/releases). The plugin library comes from the [extensions releases page](https://github.com/grft-dev/graftcode-extensions/releases), and gg looks for it next to the config file first, then in its working directory. The README's Windows example runs from the folder that contains `gg.exe`, the hosted module (`netapp.dll`), and `SqsPlugin.dll`:
 
@@ -140,7 +140,7 @@ var result = rtmCtx.GetType("netapp.Calculator").CreateInstance()
 
 `AddConfig` accepts a JSON string, a file path, or the name of an environment variable holding either; the key under `configurations` must match the name passed to `InitializeRC`, and only one plugin config is loaded per process.
 
-### **One-Way Calls and the Settings That Tune Both Modes**
+### One-Way Calls and the Settings That Tune Both Modes
 
 For methods that do not return a value, set `oneWay` to `true` on both the client and the Gateway. The client then sends without waiting; the message carries no `GraftcodeReplyTo` attribute, and the Gateway deletes the message after processing. The one-way client needs only the request queue:
 
@@ -168,7 +168,7 @@ One detail catches many first attempts: queue URLs in the config must be the URL
 
 The repository also carries ready-made Docker samples. According to the [samples README](https://github.com/grft-dev/graftcode-extensions/blob/main/communication-plugin-samples/README.md), the SQS sample publishes LocalStack on port 4566 and the Gateway on port 10304, with Graft Vision on port 10404. Running `.\run.ps1` in the sample folder builds the images, and the first run downloads the latest Linux Gateway and the matching plugin release. For manual setups, use a plugin and a Gateway of matching versions, because plugin v1.2.0 introduced a new transport C ABI, so a plugin and a Gateway from different generations may not load together. Only the first of three Gateway servers publishes ports to the host. The other two are internal consumers that compete for the same queue, which shows how additional Gateway instances share the request load. The `sqs-init` service is a one-shot job that creates the queues and should end in `Exited (0)`.
 
-## **Permissions and Production Settings Checklist for AWS**
+## Permissions and Production Settings Checklist for AWS
 
 A working local setup uses static test credentials, and none of that carries over to AWS. The README lists the permissions for each identity. The Gateway needs `sqs:ReceiveMessage`, `sqs:DeleteMessage`, and `sqs:SendMessage` on the request queue, plus `sqs:SendMessage` on reply queues. A client needs `sqs:SendMessage` on the request queue, plus `sqs:ReceiveMessage` and `sqs:DeleteMessage` on its own reply queue. Static `test` credentials belong to LocalStack only, and on AWS the default credential chain supplies identities.
 
@@ -176,26 +176,26 @@ A working local setup uses static test credentials, and none of that carries ove
 
 The remaining items come from the earlier sections. The queue URLs should be the ones AWS returns. The visibility timeout should exceed the longest call. A dead-letter queue should be attached with a `maxReceiveCount` that allows enough retries. Each client process should have its own reply queue, and the handlers behind every exposed method should tolerate being called twice.
 
-## **Where Should You Start with SQS and Graftcode**
+## Where Should You Start with SQS and Graftcode
 
 SQS gives a team on AWS durable queues with very little to operate, and request/reply over SQS comes down to a handful of decisions: a correlation ID and a reply address on each request, one reply queue per client process, a visibility timeout longer than the slowest call, a dead-letter queue for requests that never succeed, and idempotent handlers because delivery is at least once. The 1 MiB message limit and the 5-minute FIFO deduplication window set the outer edges of what a single call can carry and what duplicate protection to expect.
 
 The Graftcode plugin applies those decisions through configuration instead of hand-written queue code. A good first step is the LocalStack sample in the [graftcode-extensions repository](https://github.com/grft-dev/graftcode-extensions): run one Gateway and one client in request/reply mode, then switch one method to `oneWay` and compare the behavior. The [Graftcode website](https://www.graftcode.com/) has the product overview and links to the documentation for the Gateway and Grafts.
 
-## **FAQ**
+## FAQ
 
-### **Is there an Amazon SNS plugin for Graftcode?**
+### Is there an Amazon SNS plugin for Graftcode?
 
 No. The graftcode-extensions repository lists plugins for RabbitMQ, Azure Service Bus, Kafka, Amazon SQS, and Google Cloud Pub/Sub, and the SQS plugin's README states that Amazon SNS is not involved. SNS can still sit in front of an SQS queue on the AWS side, because [SNS can deliver a copy of each published message to every subscribed SQS queue](https://docs.aws.amazon.com/sns/latest/dg/sns-sqs-as-subscriber.html). The plugin itself does not unwrap SNS envelopes. It decodes each message body as its own `graftcode-base64:` payload and reads Graftcode message attributes, so a message that arrives wrapped by an SNS subscription is not something the Gateway can process as a call.
 
-### **Does the plugin require a FIFO queue?**
+### Does the plugin require a FIFO queue?
 
 No. The README states that both standard and FIFO queues are supported. A queue URL ending in `.fifo` makes the plugin send `MessageGroupId` (default `graftcode`) and `MessageDeduplicationId` with each message. Either queue type needs idempotent handlers, since a consumer that fails after doing the work still sees the message again. With the default group ID, all requests on a FIFO queue share one group and are processed one at a time, so throughput-sensitive services should use a standard queue or set `messageGroupId` deliberately.
 
-### **Can several client processes share one reply queue?**
+### Can several client processes share one reply queue?
 
 No. SQS cannot filter receives by message attribute, so each client process needs its own `replyQueueUrl`, and independent processes must not share one. A single process can run many concurrent calls, because a background receiver dispatches replies by correlation ID.
 
-### **What happens if a call takes longer than the visibility timeout?**
+### What happens if a call takes longer than the visibility timeout?
 
 The message becomes visible again and is received for another attempt, which can cause the same request to be processed twice. Set `visibilityTimeoutSeconds` above the longest call, and raise it together with `rpcTimeoutMs` when a method needs more time. The value can range from 1 to 43200 seconds in the plugin, which lines up with the 12-hour limit that SQS applies.
