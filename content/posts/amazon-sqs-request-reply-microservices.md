@@ -77,7 +77,7 @@ Delivery follows the SQS rules. The Gateway deletes a request only after process
 
 Failures and concurrency follow from how the Gateway side is built. In the plugin source, a request whose processing fails, or whose reply cannot be sent, is simply left on the queue, so it returns after the visibility timeout and is processed again until it succeeds or lands in the dead-letter queue. On the client side, a response whose first byte is 255 is treated as an error: the remaining bytes become the message of a thrown exception, the same convention the Azure Service Bus plugin uses. A call that never receives a reply fails once `rpcTimeoutMs` expires. Each Gateway instance reads one message at a time and handles requests one after another, so throughput grows by running more Gateway instances against the same request queue. The visibility timeout is not extended while a request is being processed, which is another reason to set it above the slowest call.
 
-![](/uploads/amazon-sqs-request-reply-microservices/image1.png)
+![Table comparing Graftcode SQS request/reply and one-way modes by reply queue, gateway action, and setting](/uploads/amazon-sqs-request-reply-microservices/image1.png)
 
 The reply queue is not created by the plugin. The client config supplies its URL, and the queue has to exist before the first call, which is why the Docker sample runs an init job that creates `graft-requests` and `graft-replies`.
 
