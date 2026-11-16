@@ -27,7 +27,7 @@ Request/reply therefore needs two topic-and-subscription pairs. The caller publi
 
 The ordering of setup steps is the part that is easy to get wrong. The reply subscription has to exist before the request goes out, because a response published to a reply topic with no subscription is dropped. The rest of this piece follows from that constraint and from the delivery behavior described next.
 
-![](/uploads/pubsub-request-reply-microservices/image1.png)
+![Pub/Sub request/reply flow: caller sends correlationId and replyTo, service pulls and acks, reply read from subscription](/uploads/pubsub-request-reply-microservices/image1.png)
 
 ## Why Each Caller Needs Its Own Reply Topic and Subscription
 
