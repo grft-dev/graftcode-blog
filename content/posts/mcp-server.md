@@ -1,14 +1,17 @@
 ---
-title: Do You Really Need a Separate MCP Server?
-slug: mcp-server
+title: 'MCP Server vs API: Do You Need a Separate MCP Server?'
+slug: mcp-server-vs-api
 date: 2026-10-22T04:33:19.122Z
 author: Adam Wasielewski
 category: General
 readingTime: 7
 coverImage: /uploads/mcp-server/image4.png
+excerpt: 'MCP server vs API: when your existing API is enough for AI agents, when you need a separate MCP server, and how to expose a hosted service over MCP.'
 ---
 
 ## TL;DR
+
+An API lets your code call a service. An MCP server lets an AI application discover that service's tools and call them through one standard protocol, JSON-RPC 2.0. If you already own and host the service, you usually don't need to hand-write a separate MCP server.
 
 * [Anthropic introduced the Model Context Protocol in November 2024](https://www.anthropic.com/news/model-context-protocol) specifically to solve the M×N integration problem, where every AI application previously needed its own custom connector for every data source it wanted to reach.
 * [The protocol runs on a client-server architecture over JSON-RPC 2.0](https://modelcontextprotocol.io/docs/learn/architecture), where a server exposes tools, resources, and prompts, and an AI application's MCP client discovers and calls them through a standard schema.
@@ -16,15 +19,28 @@ coverImage: /uploads/mcp-server/image4.png
 * [Adoption has moved fast since the original release](https://en.wikipedia.org/wiki/Model_Context_Protocol): OpenAI added MCP support in March 2025 and Google DeepMind followed in April, which is part of why teams now reach for a new MCP server project by default whenever a service needs to be agent-accessible.
 * For a service a team already owns and hosts, most of that work is redundant, and it's the specific gap Graftcode closes by turning an already-hosted service into an MCP server automatically, with no separate project to write or maintain.
 
+## MCP server vs API: the differences in one table
+
+|                            | API                                     | MCP server                                                   |
+| -------------------------- | --------------------------------------- | ------------------------------------------------------------ |
+| Who calls it               | Code a developer writes                 | An AI application, through its MCP client                    |
+| How capabilities are found | Developers read docs or an OpenAPI spec | The client calls tools/list at runtime                       |
+| Contract                   | Endpoints, often described in OpenAPI   | Tools, each with a JSON Schema inputSchema                   |
+| Protocol                   | Usually REST over HTTP                  | JSON-RPC 2.0, over stdio locally or Streamable HTTP remotely |
+| Who picks the next call    | Your code                               | The model, based on the user's request                       |
+| Best for                   | Fixed service-to-service calls          | Letting an agent choose among a service's methods            |
+
+A service hosted on the Graftcode Gateway gets both: its methods stay callable as before and also appear as MCP tools at `http://<service-host>:81/mcp`.
+
 Every AI coding assistant, agent framework, and IDE integration released over the past two years has needed the same thing: a reliable way to reach outside its own context window and call real tools against real systems. Before the Model Context Protocol existed, that meant a custom integration for every pairing of AI application and data source, a combinatorial problem that got worse with every new tool an agent needed and every new client that wanted to use it. MCP standardized that connection into a single protocol, and it's now the default way an AI application discovers what a service can do and calls it.
 
 This piece looks at what actually goes into standing up an MCP server by hand, since "build an MCP server" has become the reflexive answer whenever a service needs to be reachable by an AI agent, whether or not that's the right amount of work for what's actually needed. It covers the genuine cases where a hand-written server earns its place, the more common case where it solves a problem that already has an answer, and the case where a service that's already hosted and running can skip the standalone server project entirely.
 
-## What an MCP Server Provides to an AI Application
+## What an MCP server adds on top of an API
 
 MCP follows a client-server model with three participants: an MCP host, the AI application itself, such as an IDE or a chat client; an MCP client, which the host creates one of per server it connects to; and the MCP server, the program that actually provides the context or the capability being requested. [The protocol's data layer runs on JSON-RPC 2.0](https://modelcontextprotocol.io/docs/learn/architecture), and a server can expose three kinds of primitives to a connected client: tools, which are executable functions an AI application can invoke; resources, which are data sources that provide context without being executed; and prompts, which are reusable interaction templates.
 
-![](/uploads/mcp-server/image3.png)
+![MCP host and client calling tools/list and tools/call over JSON-RPC 2.0 on an MCP server with tools, resources and prompts](/uploads/mcp-server/image3.png)
 
 A client discovers what a server offers by calling list methods, `tools/list`, for example, before calling anything. Each tool in that list carries a name, a description, and an `inputSchema` written as JSON Schema, which is what lets an AI application know exactly what arguments a tool expects before it ever calls it. This schema-first discovery step is the part of MCP that a hand-written server has to construct and keep current by hand.
 
@@ -38,11 +54,11 @@ The problem is that this default gets applied uniformly, even to services a team
 
 [Standing up a production MCP server from scratch](https://render.com/articles/building-and-hosting-mcp-servers-a-complete-guide) breaks down into a few distinct pieces of work, each of which has to be written and maintained on an ongoing basis.
 
-![](/uploads/mcp-server/image1.png)
+![Four things a hand-written MCP server needs: tool definitions, transport, a security layer, schema maintenance](/uploads/mcp-server/image1.png)
 
 ### **Tool definitions and schemas**
 
-Every tool needs a name, a description, and a JSON Schema describing its inputs, written either by hand or inferred from function signatures, depending on the SDK.
+Every tool needs a name, a description, and a JSON Schema describing its inputs, written either by hand or inferred from function signatures, depending on the SDK. [Each tool definition is also loaded into the model's context, so it costs tokens in every session](https://www.graftcode.com/blog/ai-token-optimization).
 
 ### **Transport implementation**
 
@@ -74,7 +90,7 @@ A server built to hand an agent a document, a schema, or a prompt template is do
 
 Each of these has one thing in common: the MCP server is doing genuine translation or curation work, not just re-describing methods a service already exposes somewhere else.
 
-## Deciding Whether Your Service Needs Its Own MCP Server
+## When to use an MCP server vs an API
 
 **A standalone MCP server is worth writing when:**
 
@@ -99,7 +115,7 @@ For the redundant case above, a service already hosted through the Graftcode Gat
 gg PhysicsCalculator.dll --modules ./modules
 ```
 
-![](/uploads/mcp-server/image2.png)
+![Without Graftcode, a hand-written MCP server sits between the service and the AI client; with Graftcode, the Gateway exposes the service's methods as MCP tools](/uploads/mcp-server/image2.png)
 
 Once that's running, any MCP-compatible client, Cursor, Claude, Windsurf, Roo Code, Continue, GitHub Copilot, and Zed, among them, can connect directly:
 
@@ -111,13 +127,15 @@ That's the same port 81 that serves Graftcode Vision, the live method documentat
 
 This doesn't replace an existing REST or gRPC API a service already has; those can keep running exactly as they are. What it removes is the separate MCP server project a team would otherwise write purely to give an AI agent access to a service that's already hosted and already exposing its methods to everything else.
 
+[See how to take an MCP endpoint to production](https://www.graftcode.com/blog/mcp-hosting).
+
 ## What Still Needs Custom MCP Work Even With Graftcode
 
 Automatic exposure only covers services actually hosted through a Graftcode Gateway. A third-party API a team doesn't run itself still needs a hand-written server to translate it into MCP, since there's no Gateway to point at something Graftcode doesn't host. The same goes for a deliberately curated or reshaped tool surface, narrower than what a service's raw methods expose, or resources and prompts that don't correspond to any method call at all. Access policies can narrow which methods are visible, but they narrow from what the service already has, they don't invent a different surface from scratch.
 
 For everything else, the pattern holds: a service that's already internally hosted doesn't need a second project whose only job is describing it again in a different schema.
 
-## Where Should You Start
+## Where to start: test one hosted service first
 
 Standing up an MCP server is real, necessary work when a service genuinely needs translation, whether that's wrapping a third-party API, curating a narrower tool surface, or exposing resources that don't map to any existing method. It's redundant work when the service is already internally owned and hosted, and the MCP server being written would do nothing but restate methods that already exist somewhere else in the system.
 
@@ -144,3 +162,15 @@ No. Graftcode covers services a team hosts itself: once a service runs through t
 ### **5. Does exposing a service through Graftcode's automatic MCP support require rewriting it?**
 
 No. A service becomes an MCP endpoint by running through the Graftcode Gateway the same way it would for any other caller; its own code doesn't need to change. The same public methods already exposed to regular Graft callers are what becomes available as MCP tools once the Gateway is hosting that service.
+
+### **6. Can an API be an MCP server?**
+
+Not on its own. An MCP server speaks JSON-RPC 2.0 and lists its tools with JSON Schema, which a REST API does not. An MCP server can wrap an API, and Graftcode exposes a service it already hosts as an MCP endpoint without a separate server.
+
+### **7. What is the difference between an MCP host and an MCP server?**
+
+The host is the AI application, such as an IDE or chat client, and it creates one MCP client per server. The server is the program that provides tools, resources and prompts.
+
+### **8. Will MCP replace APIs?**
+
+No. Most MCP servers call existing APIs underneath. MCP adds a standard way for AI applications to find and call those capabilities.
