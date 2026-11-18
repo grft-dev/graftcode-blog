@@ -7,12 +7,12 @@ category: General
 readingTime: 10
 coverImage: /uploads/microservice-integration/image2.png
 seo:
-  metaTitle: ' AI Agent Architecture for Distributed Systems | Graftcode'
-  metaDescription: AI agents fail multi-step workflows when each service call is a guess. Typed interfaces and Graftcode make distributed systems legible to agents at runtime.
-  ogTitle: Build Distributed Systems That AI Agents Can Actually Understand
-  ogDescription: 'Multi-step agent workflows succeed only about half the time. The fix is architectural: typed, minimal service interfaces an agent can read instead of infer.'
-  ogImage: /uploads/ai-agent-architecture/banner.png
-  canonicalPath: /blog/ai-agent-architecture
+  metaTitle: ''
+  metaDescription: ''
+  ogTitle: ''
+  ogDescription: ''
+  ogImage: ''
+  canonicalPath: ''
 ---
 
 ## TL;DR
