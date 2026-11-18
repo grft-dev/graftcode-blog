@@ -7,8 +7,9 @@ category: General
 readingTime: 10
 coverImage: /uploads/microservice-integration/image2.png
 seo:
-  metaTitle: ''
-  metaDescription: ''
+  metaTitle: A Practical Guide to Protocol-Agnostic Microservice Integration
+  metaDescription: |
+    A Practical Guide to Protocol-Agnostic Microservice Integration
   ogTitle: ''
   ogDescription: ''
   ogImage: ''
