@@ -1,6 +1,7 @@
 ---
 title: Google Cloud Pub/Sub Request/Reply Guide
 slug: pubsub-request-reply-microservices
+date: 2026-11-16T08:02:10.503Z
 author: Adam Wasielewski
 category: General
 readingTime: 16
