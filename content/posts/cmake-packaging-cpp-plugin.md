@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 25
 coverImage: /uploads/cmake-packaging-cpp-plugin/image2.png
+seo:
+  metaTitle: CMake C++ Plugin Packaging with vcpkg Guide
+  metaDescription: 'Package a C++ plugin with CMake and vcpkg so it loads on any machine with no compiler. Covers shared vs static libraries, bundled dependencies and layout.'
 ---
 
 ## TL;DR
