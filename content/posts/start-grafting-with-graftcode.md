@@ -5,6 +5,13 @@ author: Adam Wasielewski
 category: General
 readingTime: 7
 coverImage: /uploads/quick-start-image.webp
+seo:
+  metaTitle: 'Graftcode Beginner''s Guide: Start Grafting Across Languages'
+  metaDescription: 'Get started with Graftcode. Call code across languages and runtimes without REST endpoints, DTOs or client SDKs, and evolve your architecture without a rewrite.'
+  ogTitle: 'Graftcode Beginner''s Guide: Start Grafting Across Languages'
+  ogDescription: 'Get started with Graftcode. Call code across languages and runtimes without REST endpoints, DTOs or client SDKs, and evolve your architecture without a rewrite.'
+  ogImage: /uploads/quick-start-image.webp
+  canonicalPath: /blog/start-grafting-with-graftcode
 ---
 
 # 🌱 Start Grafting with Graftcode
