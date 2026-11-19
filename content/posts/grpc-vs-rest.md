@@ -6,6 +6,9 @@ author: Piotr Chrzan
 category: General
 readingTime: 15
 coverImage: /uploads/grpc-vs-rest.png
+seo:
+  metaTitle: 'gRPC vs REST: Developer Decision Guide 2026'
+  metaDescription: 'gRPC vs REST compared: when REST suits external APIs, when gRPC wins for internal high-throughput services, and the integration cost both protocols carry.'
 ---
 
 ## TL;DR
