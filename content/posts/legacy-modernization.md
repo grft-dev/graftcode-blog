@@ -7,9 +7,9 @@ category: General
 readingTime: 12
 coverImage: /uploads/legacy-modernization/image1.png
 seo:
-  metaTitle: 'Legacy Modernization Patterns: Strangler Fig'
+  metaTitle: 'Legacy Modernization Patterns: Strangler Fig and Beyond'
   metaDescription: 'Compare legacy modernization patterns like the strangler fig, pick your first extraction candidate and keep integration costs low while migrating.'
-  ogTitle: 'Legacy Modernization Patterns: Strangler Fig'
+  ogTitle: 'Legacy Modernization Patterns: Strangler Fig and Beyond'
   ogDescription: 'Compare legacy modernization patterns like the strangler fig, pick your first extraction candidate and keep integration costs low while migrating.'
   ogImage: /uploads/legacy-modernization/image1.png
   canonicalPath: /blog/legacy-modernization
