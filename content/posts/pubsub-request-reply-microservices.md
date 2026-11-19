@@ -7,9 +7,9 @@ category: General
 readingTime: 16
 coverImage: /uploads/pubsub-request-reply-microservices/image4.png
 seo:
-  metaTitle: Google Cloud Pub/Sub Request/Reply Guide
+  metaTitle: Google Cloud Pub/Sub Request/Reply for Microservices
   metaDescription: 'Pub/Sub has no reply mechanism. See how to build request/reply with correlation attributes, reply topics, ack deadlines and dead-letter topics.'
-  ogTitle: Google Cloud Pub/Sub Request/Reply Guide
+  ogTitle: Google Cloud Pub/Sub Request/Reply for Microservices
   ogDescription: 'Pub/Sub has no reply mechanism. See how to build request/reply with correlation attributes, reply topics, ack deadlines and dead-letter topics.'
   ogImage: /uploads/pubsub-request-reply-microservices/image4.png
   canonicalPath: /blog/pubsub-request-reply-microservices
