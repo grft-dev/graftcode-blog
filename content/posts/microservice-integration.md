@@ -7,8 +7,8 @@ category: General
 readingTime: 10
 coverImage: /uploads/microservice-integration/image2.png
 seo:
-  metaTitle: ''
-  metaDescription: ''
+  metaTitle: Microservice Integration Patterns Guide
+  metaDescription: 'How microservices talk to each other, how to pick the right integration pattern for each call, and how protocol-agnostic design keeps that choice reversible.'
   ogTitle: ''
   ogDescription: ''
   ogImage: ''
