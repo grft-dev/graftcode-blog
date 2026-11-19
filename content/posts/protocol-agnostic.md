@@ -9,6 +9,10 @@ coverImage: /uploads/protocol-agnostic/image1.png
 seo:
   metaTitle: 'Protocol-Agnostic Microservices: TCP, WebSocket, Brokers'
   metaDescription: 'Switch microservices between TCP, WebSocket and message broker transport without rewriting calling code by separating the service interface from the transport.'
+  ogTitle: 'Protocol-Agnostic Microservices: TCP, WebSocket, Brokers'
+  ogDescription: 'Switch microservices between TCP, WebSocket and message broker transport without rewriting calling code by separating the service interface from the transport.'
+  ogImage: /uploads/protocol-agnostic/image1.png
+  canonicalPath: /blog/protocol-agnostic
 ---
 
 ## TL;DR
