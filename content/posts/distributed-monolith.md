@@ -9,6 +9,10 @@ coverImage: /uploads/distributed-monolith/image1.png
 seo:
   metaTitle: Distributed Monolith vs Microservices Explained
   metaDescription: 'What a distributed monolith is, the four causes behind it, and how to diagnose one. Learn why microservices migrations end up tightly coupled and how to fix it.'
+  ogTitle: Distributed Monolith vs Microservices Explained
+  ogDescription: 'What a distributed monolith is, the four causes behind it, and how to diagnose one. Learn why microservices migrations end up tightly coupled and how to fix it.'
+  ogImage: /uploads/distributed-monolith/image1.png
+  canonicalPath: /blog/distributed-monolith
 ---
 
 ## TLDR
