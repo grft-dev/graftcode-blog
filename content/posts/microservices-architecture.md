@@ -6,6 +6,9 @@ author: Artur Fiedorowicz
 category: General
 readingTime: 15
 coverImage: /uploads/Microservices Architecture_ A Complete Guide for Backend Engineers.png
+seo:
+  metaTitle: 'Microservices Architecture: Complete Guide'
+  metaDescription: 'A complete microservices architecture guide for backend engineers: drawing service boundaries, communication options, and the patterns behind stable systems.'
 ---
 
 ## TL;DR
