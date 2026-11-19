@@ -10,10 +10,10 @@ excerpt: 'How to reduce token usage in Claude Code, Cursor and Codex: start fres
 seo:
   metaTitle: 'AI Token Optimization: Reduce Token Usage in AI Coding'
   metaDescription: Cut token usage in AI coding tools with 8 practical steps. Learn why bigger context windows aren't free and how context rot lowers answer quality.
-  ogTitle: Build Distributed Systems That AI Agents Can Actually Understand
-  ogDescription: 'Multi-step agent workflows succeed only about half the time. The fix is architectural: typed, minimal service interfaces an agent can read instead of infer.'
-  ogImage: /uploads/ai-agent-architecture/banner.png
-  canonicalPath: /blog/ai-agent-architecture
+  ogTitle: 'AI Token Optimization: Reduce Token Usage in AI Coding'
+  ogDescription: Cut token usage in AI coding tools with 8 practical steps. Learn why bigger context windows aren't free and how context rot lowers answer quality.
+  ogImage: /uploads/ai-token-optimization/image2.png
+  canonicalPath: /blog/ai-token-optimization
 ---
 
 ## TL;DR
