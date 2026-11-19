@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 10
 coverImage: /uploads/protocol-agnostic/image1.png
+seo:
+  metaTitle: 'Protocol-Agnostic Microservices: TCP, WebSocket, Brokers'
+  metaDescription: 'Switch microservices between TCP, WebSocket and message broker transport without rewriting calling code by separating the service interface from the transport.'
 ---
 
 ## TL;DR
