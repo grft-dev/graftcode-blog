@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 12
 coverImage: /uploads/ai-agent-architecture/banner.png
+seo:
+  metaTitle: AI Agent Architecture for Distributed Systems
+  metaDescription: Why AI agents struggle inside distributed systems and what makes a service legible at runtime. See where agent-orchestrated workflows break and how to fix them.
 ---
 
 ## TL;DR
