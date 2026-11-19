@@ -6,9 +6,9 @@ category: General
 readingTime: 7
 coverImage: /uploads/quick-start-image.webp
 seo:
-  metaTitle: 'Graftcode Beginner''s Guide: Start Grafting Across Languages'
+  metaTitle: 'Getting Started with Graftcode: Call Code Across Languages'
   metaDescription: 'Get started with Graftcode. Call code across languages and runtimes without REST endpoints, DTOs or client SDKs, and evolve your architecture without a rewrite.'
-  ogTitle: 'Graftcode Beginner''s Guide: Start Grafting Across Languages'
+  ogTitle: 'Getting Started with Graftcode: Call Code Across Languages'
   ogDescription: 'Get started with Graftcode. Call code across languages and runtimes without REST endpoints, DTOs or client SDKs, and evolve your architecture without a rewrite.'
   ogImage: /uploads/quick-start-image.webp
   canonicalPath: /blog/start-grafting-with-graftcode
