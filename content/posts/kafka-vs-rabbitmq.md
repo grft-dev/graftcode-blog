@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 15
 coverImage: /uploads/kafka-vs-rabbitmq/image1.png
+seo:
+  metaTitle: 'Kafka vs RabbitMQ: Which Broker Fits Microservices?'
+  metaDescription: Kafka vs RabbitMQ compared head to head across six dimensions. See how a streaming log differs from a message queue and pick the broker that fits your stack.
 ---
 
 ## TLDR
