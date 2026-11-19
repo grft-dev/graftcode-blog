@@ -6,9 +6,9 @@ author: Adam Wasielewski
 category: General
 coverImage: /uploads/ai-assisted-development/image6.png
 seo:
-  metaTitle: AI-Assisted Development for Distributed Systems
+  metaTitle: 'AI-Assisted Development: Best Practices for Microservices'
   metaDescription: 'Best practices for AI-assisted development across microservices: explicit service contracts, less integration boilerplate and context AI coding tools can use.'
-  ogTitle: AI-Assisted Development for Distributed Systems
+  ogTitle: 'AI-Assisted Development: Best Practices for Microservices'
   ogDescription: 'Best practices for AI-assisted development across microservices: explicit service contracts, less integration boilerplate, and context AI coding tools can use.'
   ogImage: /uploads/ai-assisted-development/image6.png
   canonicalPath: /blog/ai-assisted-development
