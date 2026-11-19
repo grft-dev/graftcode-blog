@@ -7,9 +7,9 @@ category: General
 readingTime: 15
 coverImage: /uploads/Microservices Architecture_ A Complete Guide for Backend Engineers.png
 seo:
-  metaTitle: 'Microservices Architecture: Complete Guide'
+  metaTitle: 'Microservices Architecture: A Complete Guide for Engineers'
   metaDescription: 'A complete microservices architecture guide for backend engineers: drawing service boundaries, communication options, and the patterns behind stable systems.'
-  ogTitle: 'Microservices Architecture: Complete Guide'
+  ogTitle: 'Microservices Architecture: A Complete Guide for Engineers'
   ogDescription: 'A complete microservices architecture guide for backend engineers: drawing service boundaries, communication options, and the patterns behind stable systems.'
   ogImage: /uploads/Microservices Architecture_ A Complete Guide for Backend Engineers.png
   canonicalPath: /blog/microservices-architecture
