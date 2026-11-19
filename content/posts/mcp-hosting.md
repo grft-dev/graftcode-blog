@@ -6,6 +6,9 @@ author: Michał Komor
 category: General
 readingTime: 10
 coverImage: /uploads/image6.png
+seo:
+  metaTitle: 'MCP Hosting: Expose Code as an MCP Server'
+  metaDescription: Expose your existing code as an MCP server without writing one. See what a compliant MCP server must implement and how Graftcode Gateway auto-exposes tools.
 ---
 
 ## TLDR
