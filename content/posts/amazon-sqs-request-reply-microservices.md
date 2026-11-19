@@ -9,6 +9,10 @@ coverImage: /uploads/amazon-sqs-request-reply-microservices/image2.png
 seo:
   metaTitle: Amazon SQS Request/Reply for Microservices
   metaDescription: 'SQS has no built-in request/reply. Learn how correlation IDs, per-caller reply queues, visibility timeouts and DLQs make service calls over SQS reliable.'
+  ogTitle: Amazon SQS Request/Reply for Microservices
+  ogDescription: 'SQS has no built-in request/reply. Learn how correlation IDs, per-caller reply queues, visibility timeouts and DLQs make service calls over SQS reliable.'
+  ogImage: /uploads/amazon-sqs-request-reply-microservices/image2.png
+  canonicalPath: /blog/amazon-sqs-request-reply-microservices
 ---
 
 ## TL;DR
