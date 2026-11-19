@@ -9,10 +9,10 @@ coverImage: /uploads/microservice-integration/image2.png
 seo:
   metaTitle: Microservice Integration Patterns Guide
   metaDescription: 'How microservices talk to each other, how to pick the right integration pattern for each call, and how protocol-agnostic design keeps that choice reversible.'
-  ogTitle: ''
-  ogDescription: ''
-  ogImage: ''
-  canonicalPath: ''
+  ogTitle: Microservice Integration Patterns Guide
+  ogDescription: 'How microservices talk to each other, how to pick the right integration pattern for each call, and how protocol-agnostic design keeps that choice reversible.'
+  ogImage: /uploads/microservice-integration/image2.png
+  canonicalPath: /blog/microservice-integration
 ---
 
 ## TL;DR
