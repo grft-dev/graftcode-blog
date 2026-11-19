@@ -9,6 +9,10 @@ coverImage: /uploads/context-engineering/software-architecture.png
 seo:
   metaTitle: Context Engineering for AI Coding Agents
   metaDescription: Context engineering shapes what AI coding agents can see. Learn why software architecture is the biggest context decision and where microservices waste context.
+  ogTitle: Context Engineering for AI Coding Agents
+  ogDescription: Context engineering shapes what AI coding agents can see. Learn why software architecture is the biggest context decision and where microservices waste context.
+  ogImage: /uploads/context-engineering/software-architecture.png
+  canonicalPath: /blog/context-engineering
 ---
 
 ## TLDR
