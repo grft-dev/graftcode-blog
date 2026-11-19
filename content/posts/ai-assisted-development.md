@@ -5,6 +5,9 @@ date: 2026-09-21T09:34:09.842Z
 author: Adam Wasielewski
 category: General
 coverImage: /uploads/ai-assisted-development/image6.png
+seo:
+  metaTitle: AI-Assisted Development for Distributed Systems
+  metaDescription: 'Best practices for AI-assisted development across microservices: explicit service contracts, less integration boilerplate and context AI coding tools can use.'
 ---
 
 ## TL;DR
