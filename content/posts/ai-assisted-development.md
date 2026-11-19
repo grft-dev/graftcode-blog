@@ -8,6 +8,10 @@ coverImage: /uploads/ai-assisted-development/image6.png
 seo:
   metaTitle: AI-Assisted Development for Distributed Systems
   metaDescription: 'Best practices for AI-assisted development across microservices: explicit service contracts, less integration boilerplate and context AI coding tools can use.'
+  ogTitle: AI-Assisted Development for Distributed Systems
+  ogDescription: 'Best practices for AI-assisted development across microservices: explicit service contracts, less integration boilerplate, and context AI coding tools can use.'
+  ogImage: /uploads/ai-assisted-development/image6.png
+  canonicalPath: /blog/ai-assisted-development
 ---
 
 ## TL;DR
