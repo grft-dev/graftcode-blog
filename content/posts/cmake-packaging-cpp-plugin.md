@@ -7,9 +7,9 @@ category: General
 readingTime: 25
 coverImage: /uploads/cmake-packaging-cpp-plugin/image2.png
 seo:
-  metaTitle: CMake C++ Plugin Packaging with vcpkg Guide
+  metaTitle: 'CMake C++ Plugin Packaging with vcpkg: Step-by-Step Guide'
   metaDescription: 'Package a C++ plugin with CMake and vcpkg so it loads on any machine with no compiler. Covers shared vs static libraries, bundled dependencies and layout.'
-  ogTitle: CMake C++ Plugin Packaging with vcpkg Guide
+  ogTitle: 'CMake C++ Plugin Packaging with vcpkg: Step-by-Step Guide'
   ogDescription: 'Package a C++ plugin with CMake and vcpkg so it loads on any machine with no compiler. Covers shared vs static libraries, bundled dependencies and layout.'
   ogImage: /uploads/cmake-packaging-cpp-plugin/image2.png
   canonicalPath: /blog/cmake-packaging-cpp-plugin
