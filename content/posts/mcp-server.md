@@ -10,6 +10,10 @@ excerpt: 'MCP server vs API: when your existing API is enough for AI agents, whe
 seo:
   metaTitle: 'MCP Server vs API: Do You Need a Separate One?'
   metaDescription: 'MCP server vs API: when your existing API is enough for AI agents, when you need a separate MCP server, and how to expose a service over MCP without coding one.'
+  ogTitle: 'MCP Server vs API: Do You Need a Separate One?'
+  ogDescription: 'MCP server vs API: when your existing API is enough for AI agents, when you need a separate MCP server, and how to expose a service over MCP without coding one.'
+  ogImage: /uploads/mcp-server/image4.png
+  canonicalPath: /blog/mcp-server-vs-api
 ---
 
 ## TL;DR
