@@ -9,6 +9,10 @@ coverImage: /uploads/azure-service-bus-plugin/Azure Service Bus Messaging Flow.p
 seo:
   metaTitle: Azure Service Bus Request/Reply Without Client Code
   metaDescription: Request/reply over Azure Service Bus needs reply queues and session filters. See what a correct call requires and how to skip writing the client layer by hand.
+  ogTitle: Azure Service Bus Request/Reply Without Client Code
+  ogDescription: Request/reply over Azure Service Bus needs reply queues and session filters. See what a correct call requires and how to skip writing the client layer by hand.
+  ogImage: /uploads/azure-service-bus-plugin/Azure Service Bus Messaging Flow.png
+  canonicalPath: /blog/azure-service-bus-plugin
 ---
 
 ## TL;DR
