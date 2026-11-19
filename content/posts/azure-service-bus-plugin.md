@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 10
 coverImage: /uploads/azure-service-bus-plugin/Azure Service Bus Messaging Flow.png
+seo:
+  metaTitle: Azure Service Bus Request/Reply Without Client Code
+  metaDescription: Request/reply over Azure Service Bus needs reply queues and session filters. See what a correct call requires and how to skip writing the client layer by hand.
 ---
 
 ## TL;DR
