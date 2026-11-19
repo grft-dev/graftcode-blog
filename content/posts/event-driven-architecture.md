@@ -9,6 +9,9 @@ coverImage: /uploads/image4.png
 seo:
   metaTitle: Event-Driven Architecture Patterns Guide
   metaDescription: 'Learn the four core event-driven architecture patterns, how cross-service communication works in EDA, and why the integration layer gets expensive fast.'
+  ogTitle: Event-Driven Architecture Patterns Guide
+  ogDescription: 'Learn the four core event-driven architecture patterns, how cross-service communication works in EDA, and why the integration layer gets expensive fast.'
+  canonicalPath: /blog/event-driven-architecture
 ---
 
 ## TLDR
