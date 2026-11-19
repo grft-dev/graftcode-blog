@@ -8,8 +8,8 @@ readingTime: 7
 coverImage: /uploads/ai-token-optimization/image2.png
 excerpt: 'How to reduce token usage in Claude Code, Cursor and Codex: start fresh sessions, trim context, and cut the integration code AI tools reread on every call.'
 seo:
-  metaTitle: AI Agent Architecture for Distributed Systems | Graftcode
-  metaDescription: AI agents fail multi-step workflows when each service call is a guess. Typed interfaces and Graftcode make distributed systems legible to agents at runtime.
+  metaTitle: 'AI Token Optimization: Reduce Token Usage in AI Coding'
+  metaDescription: Cut token usage in AI coding tools with 8 practical steps. Learn why bigger context windows aren't free and how context rot lowers answer quality.
   ogTitle: Build Distributed Systems That AI Agents Can Actually Understand
   ogDescription: 'Multi-step agent workflows succeed only about half the time. The fix is architectural: typed, minimal service interfaces an agent can read instead of infer.'
   ogImage: /uploads/ai-agent-architecture/banner.png
