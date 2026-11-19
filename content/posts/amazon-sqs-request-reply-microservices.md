@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 14
 coverImage: /uploads/amazon-sqs-request-reply-microservices/image2.png
+seo:
+  metaTitle: Amazon SQS Request/Reply for Microservices
+  metaDescription: 'SQS has no built-in request/reply. Learn how correlation IDs, per-caller reply queues, visibility timeouts and DLQs make service calls over SQS reliable.'
 ---
 
 ## TL;DR
