@@ -1,6 +1,7 @@
 ---
 title: CMake C++ Plugin Packaging with vcpkg
 slug: cmake-packaging-cpp-plugin
+date: 2026-11-17T08:04:07.008Z
 author: Adam Wasielewski
 category: General
 readingTime: 25
