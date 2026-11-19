@@ -9,6 +9,10 @@ coverImage: /uploads/Microservices Architecture_ A Complete Guide for Backend En
 seo:
   metaTitle: 'Microservices Architecture: Complete Guide'
   metaDescription: 'A complete microservices architecture guide for backend engineers: drawing service boundaries, communication options, and the patterns behind stable systems.'
+  ogTitle: 'Microservices Architecture: Complete Guide'
+  ogDescription: 'A complete microservices architecture guide for backend engineers: drawing service boundaries, communication options, and the patterns behind stable systems.'
+  ogImage: /uploads/Microservices Architecture_ A Complete Guide for Backend Engineers.png
+  canonicalPath: /blog/microservices-architecture
 ---
 
 ## TL;DR
