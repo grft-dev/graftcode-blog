@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 9
 coverImage: /uploads/legacy-system-modernization/legacy-system-modernization.png
+seo:
+  metaTitle: Legacy System Modernization Without a Rewrite
+  metaDescription: 'Extend a legacy system safely instead of replacing it. Learn why full rewrites fail, how to decouple incrementally and where modernization breaks down.'
 ---
 
 ## TL;DR
