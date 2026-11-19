@@ -7,6 +7,9 @@ category: General
 readingTime: 7
 coverImage: /uploads/mcp-server/image4.png
 excerpt: 'MCP server vs API: when your existing API is enough for AI agents, when you need a separate MCP server, and how to expose a hosted service over MCP.'
+seo:
+  metaTitle: 'MCP Server vs API: Do You Need a Separate One?'
+  metaDescription: 'MCP server vs API: when your existing API is enough for AI agents, when you need a separate MCP server, and how to expose a service over MCP without coding one.'
 ---
 
 ## TL;DR
