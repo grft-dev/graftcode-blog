@@ -7,9 +7,9 @@ category: General
 readingTime: 10
 coverImage: /uploads/microservice-integration/image2.png
 seo:
-  metaTitle: Microservice Integration Patterns Guide
+  metaTitle: 'Microservice Integration Patterns: How to Pick the Right One'
   metaDescription: 'How microservices talk to each other, how to pick the right integration pattern for each call, and how protocol-agnostic design keeps that choice reversible.'
-  ogTitle: Microservice Integration Patterns Guide
+  ogTitle: 'Microservice Integration Patterns: How to Pick the Right One'
   ogDescription: 'How microservices talk to each other, how to pick the right integration pattern for each call, and how protocol-agnostic design keeps that choice reversible.'
   ogImage: /uploads/microservice-integration/image2.png
   canonicalPath: /blog/microservice-integration
