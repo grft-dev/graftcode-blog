@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 12
 coverImage: /uploads/distributed-monolith/image1.png
+seo:
+  metaTitle: Distributed Monolith vs Microservices Explained
+  metaDescription: 'What a distributed monolith is, the four causes behind it, and how to diagnose one. Learn why microservices migrations end up tightly coupled and how to fix it.'
 ---
 
 ## TLDR
