@@ -6,6 +6,9 @@ author: Adam Wasielewski
 category: General
 readingTime: 12
 coverImage: /uploads/legacy-modernization/image1.png
+seo:
+  metaTitle: 'Legacy Modernization Patterns: Strangler Fig'
+  metaDescription: 'Compare legacy modernization patterns like the strangler fig, pick your first extraction candidate and keep integration costs low while migrating.'
 ---
 
 ## TL;DR
