@@ -1,6 +1,7 @@
 ---
 title: 'Best Tools to Reduce Integration Boilerplate: 8 Options for Generating Clients and Stubs'
 slug: integration-boilerplate-tools
+author: Adam Wasielewski
 readingTime: 20
 coverImage: /uploads/integration-boilerplate-tools/01-banner.webp
 seo:
